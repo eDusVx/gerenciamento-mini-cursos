@@ -1,0 +1,21 @@
+from .infra.repositories.UsuarioRepository import UserRepositoryImpl
+from .domain.repositories.UsuarioRepository import UserRepositoryInteface
+from .application.useCases.EfetuarLoginUsuarioUseCase import EfetuarLoginUsuarioUsecase
+from .infra.mappers.UsuarioMapper import UsuarioMapper
+from .domain.services.AuthService import AuthService
+from .application.services.AuthService import AuthServiceInterface
+
+class DependencyContainer:
+    @staticmethod
+    def provide_user_repository() -> UserRepositoryInteface:
+        usuarioMapper = UsuarioMapper()
+        return UserRepositoryImpl(usuarioMapper)
+    def provide_auth_service() -> AuthServiceInterface:
+        return AuthService()
+
+class UseCaseFactory:
+    @staticmethod
+    def create_efetuar_login_usuario_use_case() -> EfetuarLoginUsuarioUsecase:
+        user_repository = DependencyContainer.provide_user_repository()
+        authService = DependencyContainer.provide_auth_service()
+        return EfetuarLoginUsuarioUsecase(user_repository,authService)
