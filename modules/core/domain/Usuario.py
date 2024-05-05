@@ -60,7 +60,7 @@ class Usuario:
     
     @tipoAcesso.setter
     def tipoAcesso(self, tipoAcesso):
-        if not TipoAcesso:
+        if not tipoAcesso:
             raise ValueError('Tipoacesso não informado!')
         if not isinstance(tipoAcesso, TipoAcesso):
             raise ValueError('Tipo de acesso inválido!')

@@ -4,12 +4,12 @@ from .CoreModulle import UseCaseFactory
 
 class CoreController:
     def __init__(self):
-        self.registrarUsuarioUseCase = UseCaseFactory.create_registrar_usuario_use_case()
+        self.buscarCategoriasQuery = UseCaseFactory.create_buscar_categorias_query()
 
-    @jwt_required()
-    async def registrar_usuario(self):
+    @jwt_required()     
+    async def buscarCategorias(self):
         try:
-            response = await self.registrarUsuarioUseCase.execute(request.json)
+            response = await self.buscarCategoriasQuery.execute()
             
             return jsonify({'data': response}), 200
         except ValueError as e:
@@ -27,6 +27,6 @@ class CoreController:
             return jsonify({'error': str(e)}), 500
         
 
-registrar_usuario_controller = Blueprint('registrar_usuario_controller', __name__)
-registrar_usuario_controller.add_url_rule('/core/registrar-usuario', view_func=CoreController().registrar_usuario, methods=['POST'])
+coreController = Blueprint('coreController', __name__)
+coreController.add_url_rule('/core/buscar-categorias', view_func=CoreController().buscarCategoriasQuery, methods=['POST'])
 

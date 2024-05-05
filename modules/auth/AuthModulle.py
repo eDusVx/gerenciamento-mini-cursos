@@ -4,6 +4,7 @@ from .application.useCases.EfetuarLoginUsuarioUseCase import EfetuarLoginUsuario
 from .infra.mappers.UsuarioMapper import UsuarioMapper
 from .domain.services.AuthService import AuthService
 from .application.services.AuthService import AuthServiceInterface
+from .application.useCases.RegistrarUsuarioUseCase import RegistrarUsuarioUseCase
 
 class DependencyContainer:
     @staticmethod
@@ -19,3 +20,6 @@ class UseCaseFactory:
         user_repository = DependencyContainer.provide_user_repository()
         authService = DependencyContainer.provide_auth_service()
         return EfetuarLoginUsuarioUsecase(user_repository,authService)
+    def create_registrar_usuario_use_case() -> RegistrarUsuarioUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        return RegistrarUsuarioUseCase(user_repository)

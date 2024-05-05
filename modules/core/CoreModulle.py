@@ -1,6 +1,6 @@
 from .infra.repositories.UsuarioRepository import UserRepositoryImpl
 from .domain.repositories.UsuarioRepository import UserRepositoryInteface
-from .application.useCases.RegistrarUsuarioUseCase import RegistrarUsuarioUseCase
+from .application.queries.BuscarCategoriaQuery import BuscarCategoriasQuery
 
 class DependencyContainer:
     @staticmethod
@@ -9,6 +9,6 @@ class DependencyContainer:
 
 class UseCaseFactory:
     @staticmethod
-    def create_registrar_usuario_use_case() -> RegistrarUsuarioUseCase:
+    def create_buscar_categorias_query() -> BuscarCategoriasQuery:
         user_repository = DependencyContainer.provide_user_repository()
-        return RegistrarUsuarioUseCase(user_repository)
+        return BuscarCategoriasQuery(user_repository)

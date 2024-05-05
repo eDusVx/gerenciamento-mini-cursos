@@ -1,7 +1,16 @@
 import uuid
+from .SubCategoria import SubCategoria
+from .Notas import Nota
+from enum import Enum
+
+class Categoria(Enum):
+    TECNOLOGIA_DA_INFORMACAO = 'TECNOLOGIA DA FORMACAO'
+    MARKETING_DIGITAL = 'MARKETING DIGITAL'
+    DESIGN = 'DESIGN'
+    FINANCAS = 'FINANCAS'
 
 class Curso:
-    def __init__(self, nome: str, descricao: str, cargaHoraria: int, localizacao: str, professor: list, numeroVagas: int, notas: Notas, categorias: Categorias, alunos: int):
+    def __init__(self, nome: str, descricao: str, cargaHoraria: int, localizacao: str, professor: list, numeroVagas: int, notas: Nota, subCategoria: SubCategoria, alunos: int, categoria: Categoria):
         self.id = uuid.uuid4()
         self.nome = nome
         self.descricao = descricao
@@ -11,8 +20,9 @@ class Curso:
         self.numeroVagas = numeroVagas
         self.inscritos = [] 
         self.notas = notas
-        self.categorias = categorias
+        self.subCategoria = subCategoria
         self.alunos = alunos
+        self.categoria = categoria
 
     @property
     def nome(self):
@@ -37,6 +47,10 @@ class Curso:
     @property
     def numeroVagas(self):
         return self.__numeroVagas
+    
+    @property
+    def categoria(self):
+        return self.__categoria
 
     @nome.setter
     def nome(self, nome):
@@ -73,8 +87,16 @@ class Curso:
         if not isinstance(numeroVagas, int) or numeroVagas <= 0:
             raise ValueError('Número de vagas inválido!')
         self.__numeroVagas = numeroVagas
+    
+    @categoria.setter
+    def categoria(self, categoria):
+        if not categoria:
+            raise ValueError('Categoria não informada!')
+        if not isinstance(categoria, Categoria):
+            raise ValueError('Categoria inválida!')
+        self.__categoria = categoria
 
 
     @staticmethod
-    def create(nome: str, descricao: str, cargaHoraria: list, localizacao: str, professor: list, numeroVagas: int):
-        return Curso(nome, descricao, cargaHoraria, localizacao, professor, numeroVagas)
+    def create(nome: str, descricao: str, cargaHoraria: list, localizacao: str, professor: list, numeroVagas: int, categoria: Categoria):
+        return Curso(nome, descricao, cargaHoraria, localizacao, professor, numeroVagas, categoria)

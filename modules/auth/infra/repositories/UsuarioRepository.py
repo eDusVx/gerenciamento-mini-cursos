@@ -1,6 +1,7 @@
 from ...domain.repositories.UsuarioRepository import UserRepositoryInteface
 from ..mappers.UsuarioMapper import UsuarioMapper
 from dbconfig import Database
+from ...domain import Usuario
 
 class NenhumUsuarioCadastradoException(Exception):
     pass
@@ -27,3 +28,17 @@ class UserRepositoryImpl(UserRepositoryInteface):
             raise e
         except Exception as e:
             raise Exception("Erro ao buscar usuário.")
+        
+    def save(self, user: Usuario):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = "INSERT INTO usuarios (cpf, nome, email, senha, tipoAcesso) VALUES (%s, %s, %s, %s, %s)"
+            val = (user.cpf, user.nome, user.email, user.senha, user.tipoAcesso.name)
+            cursor.execute(sql, val)
+            connection.commit()
+            cursor.close()
+            return f'Usuario {user.nome} salvo com sucesso!'
+        except Exception as e:
+            raise Exception(f"Erro ao salvar usuário: {e}")
+

@@ -1,10 +1,11 @@
 import uuid
+from .Aula import Aula
 
-class Categoria:
-    def __init__(self, nome: str):
+class SubCategoria:
+    def __init__(self, nome: str, aula: Aula):
         self.id = uuid.uuid4()
         self.nome = nome
-        self.aulas = []
+        self.aulas = aula
 
     @property
     def nome(self):
@@ -13,7 +14,7 @@ class Categoria:
     @nome.setter
     def nome(self, nome):
         if not nome:
-            raise ValueError('Nome da categoria não informado!')
+            raise ValueError('Nome da SubCategoria não informado!')
         self.__nome = nome
 
     def adicionar_aula(self, aula):
@@ -28,4 +29,4 @@ class Categoria:
 
     @staticmethod
     def create(nome: str):
-        return Categoria(nome)
+        return SubCategoria(nome)
