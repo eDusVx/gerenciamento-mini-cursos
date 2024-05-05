@@ -2,9 +2,9 @@ import hashlib
 from enum import Enum
 
 class TipoAcesso(Enum):
-    ADMIN = 'admin'
-    ALUNO = 'aluno'
-    PROFESSOR = 'professor'
+    ADMIN = 'ADMIN'
+    ALUNO = 'ALUNO'
+    PROFESSOR = 'PROFESSOR'
 
 
 class Usuario:

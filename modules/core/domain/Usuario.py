@@ -2,16 +2,16 @@ import hashlib
 from enum import Enum
 
 class TipoAcesso(Enum):
-    ADMIN = 'admin'
-    ALUNO = 'aluno'
-    PROFESSOR = 'professor'
+    ADMIN = 'ADMIN'
+    ALUNO = 'ALUNO'
+    PROFESSOR = 'PROFESSOR'
 
 class Usuario:
     def __init__(self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso):
-        self.__cpf = cpf
+        self.cpf = cpf
         self.nome = nome
         self.email = email
-        self.senha = self.__criptografar_senha(senha)
+        self.senha = self.senha
         self.tipoAcesso = tipoAcesso
 
     @property
@@ -65,12 +65,15 @@ class Usuario:
         if not isinstance(tipoAcesso, TipoAcesso):
             raise ValueError('Tipo de acesso inválido!')
         self.__tipoAcesso = tipoAcesso
-
-    def __criptografar_senha(self, senha: str) -> str:
-        return hashlib.sha256(senha.encode()).hexdigest()
+    
+    @cpf.setter
+    def cpf(self, cpf):
+        if not cpf:
+            raise ValueError('Cpf não informado!')
+        if not isinstance(cpf, str) or not cpf.isdigit() or len(cpf) != 11:
+            raise ValueError('CPF inválido!')
+        self.__cpf = cpf
 
     @staticmethod
     def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso):
-        if not isinstance(cpf, str) or not cpf.isdigit() or len(cpf) != 11:
-            raise ValueError('CPF inválido!')
         return Usuario(cpf, nome, email, senha, tipoAcesso)
