@@ -1,6 +1,5 @@
 from flask import Flask
 from dotenv import load_dotenv
-from modules.core.CoreController import registrar_usuario_controller
 from modules.auth.AuthController import auth_controller
 from dbconfig import Database
 import os
@@ -11,7 +10,6 @@ def create_app():
     load_dotenv()
     app = Flask(os.getenv('APP_NAME'))
     app.config.from_prefixed_env()
-    app.register_blueprint(registrar_usuario_controller)
     app.register_blueprint(auth_controller)
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET')
     JWTManager(app)
