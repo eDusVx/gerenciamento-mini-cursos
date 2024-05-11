@@ -1,8 +1,13 @@
 from ...domain.Usuario import Usuario
 from ...domain.repositories.UsuarioRepository import UserRepositoryInteface
 from dbconfig import Database
+from ..mappers.UsuarioMapper import UsuarioMapper, NenhumUsuarioCadastradoException
+
 
 class UserRepositoryImpl(UserRepositoryInteface):
+    def __init__(self, usuario_mapper: UsuarioMapper):
+        self.usuario_mapper = usuario_mapper
+
     def save(self, user: Usuario):
         try:
             connection = Database.obter_conexao()
@@ -12,6 +17,25 @@ class UserRepositoryImpl(UserRepositoryInteface):
             cursor.execute(sql, val)
             connection.commit()
             cursor.close()
-            return f'Usuario {user.nome} salvo com sucesso!'
+            return f"Usuario {user.nome} salvo com sucesso!"
+        except Exception as e:
+            raise Exception(f"Erro ao salvar usuário: {e}")
+
+    def find(self, usuarioId: str):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor(dictionary=True)
+            sql = "SELECT*FROM usuarios WHERE cpf = %s"
+            val = (usuarioId,)
+            cursor.execute(sql, val)
+            result = cursor.fetchone()
+
+            if result:
+                usuario = self.usuario_mapper.modelToDomain(result)
+                return usuario
+            else:
+                raise NenhumUsuarioCadastradoException(
+                    f"Nenhum usuário cadastrado para o cpf {usuarioId}"
+                )
         except Exception as e:
             raise Exception(f"Erro ao salvar usuário: {e}")

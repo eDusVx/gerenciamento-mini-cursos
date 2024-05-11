@@ -6,20 +6,24 @@ from .domain.services.AuthService import AuthService
 from .application.services.AuthService import AuthServiceInterface
 from .application.useCases.RegistrarUsuarioUseCase import RegistrarUsuarioUseCase
 
+
 class DependencyContainer:
     @staticmethod
     def provide_user_repository() -> UserRepositoryInteface:
         usuarioMapper = UsuarioMapper()
         return UserRepositoryImpl(usuarioMapper)
+
     def provide_auth_service() -> AuthServiceInterface:
         return AuthService()
+
 
 class UseCaseFactory:
     @staticmethod
     def create_efetuar_login_usuario_use_case() -> EfetuarLoginUsuarioUsecase:
         user_repository = DependencyContainer.provide_user_repository()
         authService = DependencyContainer.provide_auth_service()
-        return EfetuarLoginUsuarioUsecase(user_repository,authService)
+        return EfetuarLoginUsuarioUsecase(user_repository, authService)
+
     def create_registrar_usuario_use_case() -> RegistrarUsuarioUseCase:
         user_repository = DependencyContainer.provide_user_repository()
         return RegistrarUsuarioUseCase(user_repository)

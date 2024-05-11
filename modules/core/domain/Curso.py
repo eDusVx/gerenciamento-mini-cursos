@@ -2,26 +2,38 @@ import uuid
 from .SubCategoria import SubCategoria
 from .Notas import Nota
 from enum import Enum
+from typing import List
+
 
 class Categoria(Enum):
-    TECNOLOGIA_DA_INFORMACAO = 'TECNOLOGIA DA FORMACAO'
-    MARKETING_DIGITAL = 'MARKETING DIGITAL'
-    DESIGN = 'DESIGN'
-    FINANCAS = 'FINANCAS'
+    TECNOLOGIA_DA_INFORMACAO = "TECNOLOGIA DA INFORMACAO"
+    MARKETING_DIGITAL = "MARKETING DIGITAL"
+    DESIGN = "DESIGN"
+    FINANCAS = "FINANCAS"
+
 
 class Curso:
-    def __init__(self, nome: str, descricao: str, cargaHoraria: int, localizacao: str, professor: list, numeroVagas: int, notas: Nota, subCategoria: SubCategoria, alunos: int, categoria: Categoria):
+    def __init__(
+        self,
+        nome: str,
+        descricao: str,
+        cargaHoraria: int,
+        professorId: str,
+        numeroVagas: int,
+        notas: Nota,
+        subCategoria: List[SubCategoria],
+        alunosId: List[str],
+        categoria: Categoria,
+    ):
         self.id = uuid.uuid4()
         self.nome = nome
         self.descricao = descricao
         self.cargaHoraria = cargaHoraria
-        self.localizacao = localizacao
-        self.professor = professor
+        self.professorId = professorId
         self.numeroVagas = numeroVagas
-        self.inscritos = [] 
         self.notas = notas
         self.subCategoria = subCategoria
-        self.alunos = alunos
+        self.alunosId = alunosId
         self.categoria = categoria
 
     @property
@@ -37,17 +49,13 @@ class Curso:
         return self.__cargaHoraria
 
     @property
-    def localizacao(self):
-        return self.__localizacao
-
-    @property
-    def professor(self):
-        return self.__professor
+    def professorId(self):
+        return self.__professorId
 
     @property
     def numeroVagas(self):
         return self.__numeroVagas
-    
+
     @property
     def categoria(self):
         return self.__categoria
@@ -55,48 +63,77 @@ class Curso:
     @nome.setter
     def nome(self, nome):
         if not nome:
-            raise ValueError('Nome do curso não informado!')
+            raise ValueError("Nome do curso não informado!")
         self.__nome = nome
 
     @descricao.setter
     def descricao(self, descricao):
         if not descricao:
-            raise ValueError('Descrição do curso não informada!')
+            raise ValueError("Descrição do curso não informada!")
         self.__descricao = descricao
 
     @cargaHoraria.setter
     def cargaHoraria(self, cargaHoraria):
-        if not cargaHoraria or not isinstance(cargaHoraria, int):
-            raise ValueError('Horários inválidos!')
+        if not cargaHoraria:
+            raise ValueError("Carga horária não informada!")
+        if not isinstance(cargaHoraria, int):
+            raise ValueError("Horários inválidos!")
         self.__cargaHoraria = cargaHoraria
 
-    @localizacao.setter
-    def localizacao(self, localizacao):
-        if not localizacao:
-            raise ValueError('Localização não informada!')
-        self.__localizacao = localizacao
-
-    @professor.setter
-    def professor(self, professor):
-        if not professor or not isinstance(professor, list):
-            raise ValueError('Lista de professor inválida!')
-        self.__professor = professor
+    @professorId.setter
+    def professorId(self, professorId):
+        if not professorId or not isinstance(professorId, str):
+            raise ValueError("Lista de professorId inválida!")
+        self.__professorId = professorId
 
     @numeroVagas.setter
     def numeroVagas(self, numeroVagas):
         if not isinstance(numeroVagas, int) or numeroVagas <= 0:
-            raise ValueError('Número de vagas inválido!')
+            raise ValueError("Número de vagas inválido!")
         self.__numeroVagas = numeroVagas
-    
+
     @categoria.setter
     def categoria(self, categoria):
         if not categoria:
-            raise ValueError('Categoria não informada!')
+            raise ValueError("Categoria não informada!")
         if not isinstance(categoria, Categoria):
-            raise ValueError('Categoria inválida!')
+            raise ValueError("Categoria inválida!")
         self.__categoria = categoria
 
-
     @staticmethod
-    def create(nome: str, descricao: str, cargaHoraria: list, localizacao: str, professor: list, numeroVagas: int, categoria: Categoria):
-        return Curso(nome, descricao, cargaHoraria, localizacao, professor, numeroVagas, categoria)
+    def create(
+        nome: str,
+        descricao: str,
+        cargaHoraria: int,
+        professorId: str,
+        numeroVagas: int,
+        categoria: Categoria,
+        notas=None,
+        subCategoria=None,
+        alunosId=None,
+    ):
+        return Curso(
+            nome,
+            descricao,
+            cargaHoraria,
+            professorId,
+            numeroVagas,
+            notas,
+            subCategoria,
+            alunosId,
+            categoria,
+        )
+
+    def toDto(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "descricao": self.descricao,
+            "cargaHoraria": self.cargaHoraria,
+            "professorId": self.professorId,
+            "numeroVagas": self.numeroVagas,
+            "notas": self.notas,
+            "subCategoria": self.subCategoria,
+            "alunosId": self.alunosId,
+            "categoria": self.categoria.value,
+        }

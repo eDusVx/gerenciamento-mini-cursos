@@ -19,19 +19,19 @@ class Nota:
     @prova.setter
     def prova(self, prova):
         if not isinstance(prova, int) or prova <= 0:
-            raise ValueError('Número da prova inválido!')
+            raise ValueError("Número da prova inválido!")
         self.__prova = prova
 
     @alunoId.setter
     def alunoId(self, alunoId):
         if not alunoId:
-            raise ValueError('ID do aluno não informado!')
+            raise ValueError("ID do aluno não informado!")
         self.__alunoId = alunoId
 
     @valor.setter
     def valor(self, valor):
         if not isinstance(valor, (int, float)) or valor < 0:
-            raise ValueError('Valor da nota inválido!')
+            raise ValueError("Valor da nota inválido!")
         self.__valor = valor
 
     @staticmethod

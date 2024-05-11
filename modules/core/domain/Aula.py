@@ -24,21 +24,21 @@ class Aula:
     @data.setter
     def data(self, data):
         if not data:
-            raise ValueError('Data não informada!')
+            raise ValueError("Data não informada!")
         self.__data = data
 
     @horario.setter
     def horario(self, horario):
         if not horario:
-            raise ValueError('Horário não informado!')
+            raise ValueError("Horário não informado!")
         self.__horario = horario
 
     @conteudo.setter
     def conteudo(self, conteudo):
         if not conteudo:
-            raise ValueError('Conteúdo não informado!')
+            raise ValueError("Conteúdo não informado!")
         self.__conteudo = conteudo
 
     @staticmethod
-    def create( data: str, horario: str, conteudo: str):
+    def create(data: str, horario: str, conteudo: str):
         return Aula(data, horario, conteudo)
