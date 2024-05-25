@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCursos - Cursos (Professor)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            position: relative;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #f8f8f8;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+            margin: 60px 20px 20px 20px; 
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        .container h2 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .dados-professor {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 70px; 
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%;
+        }
+        .dados-professor h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .dados-professor p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">BCursos</div>
+    </header>
+    <div class="container">
+        <h2>Cursos</h2>
+        <ul id="lista-cursos">
+            <li>Curso 1</li>
+            <li>Curso 2</li>
+            <li>Curso 3</li>
+            <li>Curso 4</li>
+            <li>Curso 5</li>
+           
+        </ul>
+        <div class="section">
+            <h3>Opções</h3>
+            <div class="form-group">
+                <button onclick="adicionarMaterial()">Adicionar Material</button>
+            </div>
+            <div class="form-group">
+                <button onclick="verListaAlunos()">Ver Lista de Alunos</button>
+            </div>
+            <div class="form-group">
+                <button onclick="registrarPresenca()">Registrar Presença e Notas</button>
+            </div>
+        </div>
+    </div>
+    <div class="dados-professor">
+        <h3>Dados do Professor</h3>
+        <p>Nome: Maria da Silva</p>
+        <p>Departamento: Engenharia de Software</p>
+        <p>E-mail: maria.silva@exemplo.com</p>
+    </div>
+    <script> // funções em Js a serem adicionadas
+        function adicionarMaterial() {
+            alert('Funcionalidade de adicionar material.');
+        }
+        function verListaAlunos() {
+            alert('Funcionalidade de ver lista de alunos.');
+        }
+        function registrarPresenca() {
+            alert('Funcionalidade de registrar presença e notas.');
+        }
+    </script>
+</body>
+</html>
