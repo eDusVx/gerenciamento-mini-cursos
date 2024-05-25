@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCursos - Sistema de Cadastros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f8f8;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .login-form {
+            display: flex;
+            align-items: center;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            margin: 0 5px;
+            padding: 5px;
+        }
+        .login-form button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: right;
+        }
+        .forgot-password a {
+            text-decoration: underline;
+            color: #007BFF;
+            cursor: pointer;
+        }
+        .forgot-password a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">BCursos</div>
+        <div class="login-form">
+            <input type="text" placeholder="RA" id="ra">
+            <input type="password" placeholder="Senha" id="senha">
+            <button onclick="entrar()">Entrar</button>
+            <button onclick="registrar()">Registrar aluno</button>
+        </div>
+    </header>
+    <div class="forgot-password">
+        <a href="esqueci_senha.html">Esqueci minha senha</a>
+    </div>
+    <script> //funções em js
+        function entrar() {
+            
+            alert('Entrar');
+        }
+
+        function registrar() {
+            
+            window.location.href = 'registro.html';
+        }
+    </script>
+</body>
+</html>
