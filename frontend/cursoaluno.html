@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCursos - Cursos (Aluno)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            position: relative;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #f8f8f8;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+            margin: 60px 20px 20px 20px; 
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        .container h2 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .dados-aluno {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 70px; 
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%; 
+        }
+        .dados-aluno h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .dados-aluno p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">BCursos</div>
+    </header>
+    <div class="container">
+        <h2>Cursos</h2>
+        <ul id="lista-cursos">
+            <li>Curso 1</li>
+            <li>Curso 2</li>
+            <li>Curso 3</li>
+            <li>Curso 4</li>
+            <li>Curso 5</li>
+        </ul>
+        <div class="section">
+            <h3>Opções</h3>
+            <div class="form-group">
+                <button onclick="visualizarMateriais()">Visualizar Materiais</button>
+            </div>
+            <div class="form-group">
+                <button onclick="visualizarAvaliacoes()">Visualizar Avaliações</button>
+            </div>
+            <div class="form-group">
+                <button onclick="visualizarPresencas()">Visualizar Presenças e Faltas</button>
+            </div>
+        </div>
+    </div>
+    <div class="dados-aluno">
+        <h3>Dados do Aluno</h3>
+        <p>Nome: João da Silva</p>
+        <p>RA: 123456</p>
+        <p>Curso: Engenharia de Software</p>
+        <p>E-mail: joao.silva@exemplo.com</p>
+    </div>
+    <script>
+         function visualizarMateriais() {
+            alert('Funcionalidade de visualizar materiais.');
+        }
+        function visualizarAvaliacoes() {
+            alert('Funcionalidade de visualizar avaliações.');
+        }
+        function visualizarPresencas() {
+            alert('Funcionalidade de visualizar presenças e faltas.');
+        }
+    </script>
+</body>
+</html>
+
