@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCursos - Cursos (Professor)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            position: relative;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #f8f8f8;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+            margin: 200px 20px 20px 20px; /* Ajuste para posicionar abaixo do container do administrador */
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        .container h2 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .dados-administrador {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%;
+        }
+        .dados-administrador h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .dados-administrador p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">BCursos</div>
+    </header>
+    <div class="container">
+        <h2>Opções de Administração</h2>
+        <div class="section">
+            <div class="form-group">
+                <button onclick="atualizarCadastroProfessor()">Atualizar cadastro de professor</button>
+            </div>
+            <div class="form-group">
+                <button onclick="criarCurso()">Criar curso</button>
+            </div>
+            <div class="form-group">
+                <button onclick="atualizarCursos()">Atualizar cursos</button>
+            </div>
+            <div class="form-group">
+                <button onclick="novoAdministrador()">Novo administrador</button>
+            </div>
+            <div class="form-group">
+                <button onclick="atualizarCadastroAluno()">Atualizar cadastro de aluno</button>
+            </div>
+        </div>
+    </div>
+    <div class="dados-administrador">
+        <h3>Dados do Administrador</h3>
+        <p>Nome: Maria da Silva</p>
+        <p>Departamento: Engenharia de Software</p>
+        <p>E-mail: maria.silva@exemplo.com</p>
+    </div>
+    <script> // funçções em java para add dps
+        function atualizarCadastroProfessor() {
+            alert('Funcionalidade de atualizar cadastro de professor.');
+        }
+        function criarCurso() {
+            alert('Funcionalidade de criar curso.');
+        }
+        function atualizarCursos() {
+            alert('Funcionalidade de atualizar cursos.');
+        }
+        function novoAdministrador() {
+            alert('Funcionalidade de novo administrador.');
+        }
+        function atualizarCadastroAluno() {
+            alert('Funcionalidade de atualizar cadastro de aluno.');
+        }
+    </script>
+</body>
+</html>
