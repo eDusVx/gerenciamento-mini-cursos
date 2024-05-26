@@ -1,5 +1,5 @@
 import uuid
-from typing import List
+from typing import List, Optional
 from .Aula import Aula
 
 class Curso:
@@ -10,10 +10,10 @@ class Curso:
         cargaHoraria: int,
         professor: str,
         numeroVagas: int,
-        alunos: List[str],
         cursoRelacionado: str,
         status: str,
-        aula: List[Aula]
+        alunos: Optional[List[str]] = None,
+        aula: Optional[List[Aula]] = None
     ):
         self.id = uuid.uuid4()
         self.nome = nome
@@ -21,9 +21,9 @@ class Curso:
         self.cargaHoraria = cargaHoraria
         self.professor = professor
         self.numeroVagas = numeroVagas
-        self.alunos = alunos
         self.cursoRelacionado = cursoRelacionado
         self.status = status
+        self.alunos = alunos
         self.aula = aula
 
     @property
@@ -104,7 +104,7 @@ class Curso:
 
     @alunos.setter
     def alunos(self, alunos):
-        if not alunos or len(alunos) == 0:
+        if alunos is not None and len(alunos) == 0:
             raise ValueError("Alunos não informados!")
         self.__alunos = alunos
 
@@ -114,7 +114,7 @@ class Curso:
 
     @aula.setter
     def aula(self, aula):
-        if not aula or len(aula) == 0:
+        if aula is not None and len(aula) == 0:
             raise ValueError("Aulas não informadas!")
         self.__aula = aula
 
@@ -127,8 +127,6 @@ class Curso:
         numeroVagas: int,
         cursoRelacionado: str,
         status: str,
-        alunos = None,
-        aula = None
     ):
         return Curso(
             nome,
@@ -136,10 +134,8 @@ class Curso:
             cargaHoraria,
             professor,
             numeroVagas,
-            alunos if alunos is not None else [],
             cursoRelacionado,
             status,
-            aula if aula is not None else []
         )
 
     def toDto(self):

@@ -44,8 +44,7 @@ class RegistrarCursoUsecase:
                 cursoRelacionado=request["cursoRelacionado"],
                 status=request["status"]
             )
-
-            print(curso.toDto())
+            # TODO SALVAR CURSO NA BASE
             return curso.toDto()
         except Exception as e:
             raise e
