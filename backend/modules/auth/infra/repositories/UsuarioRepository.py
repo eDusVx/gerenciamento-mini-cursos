@@ -16,7 +16,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
-            sql = "SELECT * FROM teste_ddd.usuarios WHERE email = %s"
+            sql = "SELECT * FROM usuarios WHERE email = %s"
             val = (email,)
             cursor.execute(sql, val)
             result = cursor.fetchone()
@@ -37,8 +37,8 @@ class UserRepositoryImpl(UserRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
-            sql = "INSERT INTO usuarios (cpf, nome, email, senha, tipoAcesso) VALUES (%s, %s, %s, %s, %s)"
-            val = (user.cpf, user.nome, user.email, user.senha, user.tipoAcesso.name)
+            sql = "INSERT INTO usuarios (cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            val = (user.cpf, user.nome, user.email, user.senha, user.tipoAcesso.name, user.dataNascimento, user.sexo.name, user.ra)
             cursor.execute(sql, val)
             connection.commit()
             cursor.close()

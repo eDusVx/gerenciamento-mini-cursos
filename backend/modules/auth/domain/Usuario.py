@@ -1,5 +1,6 @@
 import hashlib
 from enum import Enum
+from datetime import datetime, date
 
 
 class TipoAcesso(Enum):
@@ -8,15 +9,23 @@ class TipoAcesso(Enum):
     PROFESSOR = "PROFESSOR"
 
 
+class Sexo(Enum):
+    M = "MASCULINO"
+    F = "FEMININO"
+
+
 class Usuario:
     def __init__(
-        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso
+        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str
     ):
         self.__cpf = cpf
         self.nome = nome
         self.email = email
         self.__senha = senha if len(senha) == 64 else self.__criptografar_senha(senha)
         self.tipoAcesso = tipoAcesso
+        self.sexo = sexo
+        self.dataNascimento = dataNascimento
+        self.ra = ra
 
     @property
     def cpf(self):
@@ -37,6 +46,18 @@ class Usuario:
     @property
     def tipoAcesso(self):
         return self.__tipoAcesso
+    
+    @property
+    def sexo(self):
+        return self.__sexo
+    
+    @property
+    def dataNascimento(self):
+        return self.__dataNascimento
+    
+    @property
+    def ra(self):
+        return self.__ra
 
     @nome.setter
     def nome(self, nome):
@@ -64,20 +85,50 @@ class Usuario:
 
     @tipoAcesso.setter
     def tipoAcesso(self, tipoAcesso):
-        if not TipoAcesso:
+        if not tipoAcesso:
             raise ValueError("Tipoacesso não informado!")
         if not isinstance(tipoAcesso, TipoAcesso):
             raise ValueError("Tipo de acesso inválido!")
         self.__tipoAcesso = tipoAcesso
+    
+    @sexo.setter
+    def sexo(self, sexo):
+        if not sexo:
+            raise ValueError("Sexo não informado!")
+        if not isinstance(sexo, Sexo):
+            raise ValueError("Sexo inválido!")
+        self.__sexo = sexo
+
+    @dataNascimento.setter
+    def dataNascimento(self, dataNascimento):
+        if not dataNascimento:
+            raise ValueError("Data de nascimento não informada!")
+        if not isinstance(dataNascimento, (date, datetime)):
+            raise ValueError("Data de nascimento inválida!")
+        self.__dataNascimento = dataNascimento
+    
+    @cpf.setter
+    def cpf(self, cpf):
+        if not cpf:
+            raise ValueError("CPF não informado!")
+        if not isinstance(cpf, str) or not cpf.isdigit() or len(cpf) != 11:
+            raise ValueError("CPF inválido!")
+        
+        self.__cpf = cpf
+    
+    @ra.setter
+    def ra(self, ra):
+        if not ra:
+            raise ValueError("RA não informado!")
+        
+        self.__ra = ra
 
     def __criptografar_senha(self, senha: str) -> str:
         return hashlib.sha256(senha.encode()).hexdigest()
 
     @staticmethod
-    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso):
-        if not isinstance(cpf, str) or not cpf.isdigit() or len(cpf) != 11:
-            raise ValueError("CPF inválido!")
-        return Usuario(cpf, nome, email, senha, tipoAcesso)
+    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str):
+        return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra)
 
     def validarSenha(self, senha: str) -> bool:
         if self.senha == hashlib.sha256(senha.encode()).hexdigest():

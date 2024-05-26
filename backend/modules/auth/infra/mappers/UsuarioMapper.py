@@ -1,4 +1,4 @@
-from ...domain.Usuario import Usuario, TipoAcesso
+from ...domain.Usuario import Usuario, TipoAcesso, Sexo
 
 
 class NenhumUsuarioCadastradoException(Exception):
@@ -13,5 +13,8 @@ class UsuarioMapper:
             usuarioModel["email"],
             usuarioModel["senha"],
             TipoAcesso[usuarioModel["tipoAcesso"]],
+            usuarioModel["dataNascimento"],
+            Sexo[usuarioModel["sexo"]],
+            usuarioModel["ra"]
         )
         return usuario

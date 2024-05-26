@@ -43,7 +43,7 @@ class RegistrarCursoUsecase:
                 numeroVagas=request["numeroVagas"],
                 categoria=Categoria[request["categoria"]],
             )
-            print(curso.toDto())
+
             return curso.toDto()
         except Exception as e:
             raise e

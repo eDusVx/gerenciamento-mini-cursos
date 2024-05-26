@@ -1,22 +1,28 @@
-import hashlib
 from enum import Enum
-
+from datetime import datetime
 
 class TipoAcesso(Enum):
     ADMIN = "ADMIN"
     ALUNO = "ALUNO"
     PROFESSOR = "PROFESSOR"
 
+class Sexo(Enum):
+    M = "MASCULINO"
+    F = "FEMININO"
+
 
 class Usuario:
     def __init__(
-        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso
+        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str
     ):
         self.cpf = cpf
         self.nome = nome
         self.email = email
         self.senha = senha
         self.tipoAcesso = tipoAcesso
+        self.sexo = sexo
+        self.dataNascimento = dataNascimento
+        self.ra = ra
 
     @property
     def cpf(self):
@@ -37,6 +43,18 @@ class Usuario:
     @property
     def tipoAcesso(self):
         return self.__tipoAcesso
+    
+    @property
+    def sexo(self):
+        return self.__sexo
+    
+    @property
+    def dataNascimento(self):
+        return self.__dataNascimento
+    
+    @property
+    def ra(self):
+        return self.__ra
 
     @nome.setter
     def nome(self, nome):
@@ -77,7 +95,30 @@ class Usuario:
         if not isinstance(cpf, str) or not cpf.isdigit() or len(cpf) != 11:
             raise ValueError("CPF inválido!")
         self.__cpf = cpf
+    
+    @sexo.setter
+    def sexo(self, sexo):
+        if not sexo:
+            raise ValueError("Sexo não informado!")
+        if not isinstance(sexo, Sexo):
+            raise ValueError("Sexo inválido!")
+        self.__sexo = sexo
+
+    @dataNascimento.setter
+    def dataNascimento(self, dataNascimento):
+        if not dataNascimento:
+            raise ValueError("Data de nascimento não informada!")
+        if not isinstance(dataNascimento, (date, datetime)):
+            raise ValueError("Data de nascimento inválida!")
+        self.__dataNascimento = dataNascimento
+    
+    @ra.setter
+    def ra(self, ra):
+        if not ra:
+            raise ValueError("RA não informado!")
+        
+        self.__ra = ra
 
     @staticmethod
-    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso):
-        return Usuario(cpf, nome, email, senha, tipoAcesso)
+    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str):
+        return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra)

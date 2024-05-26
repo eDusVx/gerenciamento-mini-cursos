@@ -19,6 +19,5 @@ class AuthService(AuthServiceInterface):
             "tipoAcesso": tipoAcesso.name,
             "exp": expira_em_timestamp,
         }
-        print(expira_em)
         token = encode(payload, os.getenv("JWT_SECRET"))
         return token
