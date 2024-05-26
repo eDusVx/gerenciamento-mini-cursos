@@ -1,5 +1,5 @@
 from enum import Enum
-from datetime import datetime
+from datetime import date, datetime
 
 class TipoAcesso(Enum):
     ADMIN = "ADMIN"
