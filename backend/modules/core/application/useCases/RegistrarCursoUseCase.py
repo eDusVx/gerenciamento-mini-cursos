@@ -1,7 +1,6 @@
 from interceptors.LoggerInterceptor import LoggerInterceptor
 from ...domain.repositories.UsuarioRepository import UserRepositoryInteface
-from ...domain.Curso import Curso, Categoria
-
+from ...domain.Curso import Curso
 
 class RegistrarCursoUseCaseRequest:
     def __init__(
@@ -9,20 +8,21 @@ class RegistrarCursoUseCaseRequest:
         nome: str,
         descricao: str,
         cargaHoraria: str,
-        professorId: str,
+        professor: str,
         numeroVagas: int,
-        categoria: str,
+        cursoRelacionado: str,
+        status: str
     ):
         self.nome = nome
         self.descricao = descricao
         self.cargaHoraria = cargaHoraria
-        self.professorId = professorId
+        self.professor = professor
         self.numeroVagas = numeroVagas
-        self.categoria = categoria
+        self.cursoRelacionado = cursoRelacionado
+        self.status = status
 
     def __getitem__(self, key):
         return getattr(self, key)
-
 
 @LoggerInterceptor()
 class RegistrarCursoUsecase:
@@ -31,19 +31,21 @@ class RegistrarCursoUsecase:
 
     async def execute(self, request: RegistrarCursoUseCaseRequest) -> str:
         try:
-            professor = self.usuario_repository.find(request["professorId"])
+            professor = self.usuario_repository.find(request["professor"])
 
             if professor is None:
                 raise ValueError("Nenhum professor encontrado com esse id!")
             curso = Curso.create(
                 nome=request["nome"],
                 descricao=request["descricao"],
-                cargaHoraria=request["cargaHoraria"],
-                professorId=request["professorId"],
+                cargaHoraria=int(request["cargaHoraria"]),
+                professor=request["professor"],
                 numeroVagas=request["numeroVagas"],
-                categoria=Categoria[request["categoria"]],
+                cursoRelacionado=request["cursoRelacionado"],
+                status=request["status"]
             )
 
+            print(curso.toDto())
             return curso.toDto()
         except Exception as e:
             raise e

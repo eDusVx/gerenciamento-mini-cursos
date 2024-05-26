@@ -1,16 +1,6 @@
 import uuid
-from .SubCategoria import SubCategoria
-from .Notas import Nota
-from enum import Enum
 from typing import List
-
-
-class Categoria(Enum):
-    TECNOLOGIA_DA_INFORMACAO = "TECNOLOGIA DA INFORMACAO"
-    MARKETING_DIGITAL = "MARKETING DIGITAL"
-    DESIGN = "DESIGN"
-    FINANCAS = "FINANCAS"
-
+from .Aula import Aula
 
 class Curso:
     def __init__(
@@ -18,47 +8,27 @@ class Curso:
         nome: str,
         descricao: str,
         cargaHoraria: int,
-        professorId: str,
+        professor: str,
         numeroVagas: int,
-        notas: Nota,
-        subCategoria: List[SubCategoria],
-        alunosId: List[str],
-        categoria: Categoria,
+        alunos: List[str],
+        cursoRelacionado: str,
+        status: str,
+        aula: List[Aula]
     ):
         self.id = uuid.uuid4()
         self.nome = nome
         self.descricao = descricao
         self.cargaHoraria = cargaHoraria
-        self.professorId = professorId
+        self.professor = professor
         self.numeroVagas = numeroVagas
-        self.notas = notas
-        self.subCategoria = subCategoria
-        self.alunosId = alunosId
-        self.categoria = categoria
+        self.alunos = alunos
+        self.cursoRelacionado = cursoRelacionado
+        self.status = status
+        self.aula = aula
 
     @property
     def nome(self):
         return self.__nome
-
-    @property
-    def descricao(self):
-        return self.__descricao
-
-    @property
-    def cargaHoraria(self):
-        return self.__cargaHoraria
-
-    @property
-    def professorId(self):
-        return self.__professorId
-
-    @property
-    def numeroVagas(self):
-        return self.__numeroVagas
-
-    @property
-    def categoria(self):
-        return self.__categoria
 
     @nome.setter
     def nome(self, nome):
@@ -66,11 +36,19 @@ class Curso:
             raise ValueError("Nome do curso não informado!")
         self.__nome = nome
 
+    @property
+    def descricao(self):
+        return self.__descricao
+
     @descricao.setter
     def descricao(self, descricao):
         if not descricao:
             raise ValueError("Descrição do curso não informada!")
         self.__descricao = descricao
+
+    @property
+    def cargaHoraria(self):
+        return self.__cargaHoraria
 
     @cargaHoraria.setter
     def cargaHoraria(self, cargaHoraria):
@@ -80,11 +58,19 @@ class Curso:
             raise ValueError("Horários inválidos!")
         self.__cargaHoraria = cargaHoraria
 
-    @professorId.setter
-    def professorId(self, professorId):
-        if not professorId or not isinstance(professorId, str):
+    @property
+    def professor(self):
+        return self.__professor
+
+    @professor.setter
+    def professor(self, professor):
+        if not professor or not isinstance(professor, str):
             raise ValueError("Lista de professorId inválida!")
-        self.__professorId = professorId
+        self.__professor = professor
+
+    @property
+    def numeroVagas(self):
+        return self.__numeroVagas
 
     @numeroVagas.setter
     def numeroVagas(self, numeroVagas):
@@ -92,36 +78,68 @@ class Curso:
             raise ValueError("Número de vagas inválido!")
         self.__numeroVagas = numeroVagas
 
-    @categoria.setter
-    def categoria(self, categoria):
-        if not categoria:
-            raise ValueError("Categoria não informada!")
-        if not isinstance(categoria, Categoria):
-            raise ValueError("Categoria inválida!")
-        self.__categoria = categoria
+    @property
+    def cursoRelacionado(self):
+        return self.__cursoRelacionado
+
+    @cursoRelacionado.setter
+    def cursoRelacionado(self, cursoRelacionado):
+        if not cursoRelacionado:
+            raise ValueError("CursoRelacionado não informado!")
+        self.__cursoRelacionado = cursoRelacionado
+
+    @property
+    def status(self):
+        return self.__status
+
+    @status.setter
+    def status(self, status):
+        if not status:
+            raise ValueError("Status não informado!")
+        self.__status = status
+
+    @property
+    def alunos(self):
+        return self.__alunos
+
+    @alunos.setter
+    def alunos(self, alunos):
+        if not alunos or len(alunos) == 0:
+            raise ValueError("Alunos não informados!")
+        self.__alunos = alunos
+
+    @property
+    def aula(self):
+        return self.__aula
+
+    @aula.setter
+    def aula(self, aula):
+        if not aula or len(aula) == 0:
+            raise ValueError("Aulas não informadas!")
+        self.__aula = aula
 
     @staticmethod
     def create(
         nome: str,
         descricao: str,
         cargaHoraria: int,
-        professorId: str,
+        professor: str,
         numeroVagas: int,
-        categoria: Categoria,
-        notas=None,
-        subCategoria=None,
-        alunosId=None,
+        cursoRelacionado: str,
+        status: str,
+        alunos = None,
+        aula = None
     ):
         return Curso(
             nome,
             descricao,
             cargaHoraria,
-            professorId,
+            professor,
             numeroVagas,
-            notas,
-            subCategoria,
-            alunosId,
-            categoria,
+            alunos if alunos is not None else [],
+            cursoRelacionado,
+            status,
+            aula if aula is not None else []
         )
 
     def toDto(self):
@@ -130,10 +148,10 @@ class Curso:
             "nome": self.nome,
             "descricao": self.descricao,
             "cargaHoraria": self.cargaHoraria,
-            "professorId": self.professorId,
+            "professor": self.professor,
             "numeroVagas": self.numeroVagas,
-            "notas": self.notas,
-            "subCategoria": self.subCategoria,
-            "alunosId": self.alunosId,
-            "categoria": self.categoria.value,
+            "alunos": self.alunos,
+            "cursoRelacionado": self.cursoRelacionado,
+            "status": self.status,
+            "aulas": self.aula 
         }

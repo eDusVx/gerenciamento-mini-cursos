@@ -14,11 +14,7 @@ class AuthController:
 
     async def efetuarLoginUsuario(self):
         try:
-            data = request.json
-            email = data.get("email")
-            senha = data.get("senha")
-
-            response = await self.efetuarLoginUsuarioUseCase.execute(email, senha)
+            response = await self.efetuarLoginUsuarioUseCase.execute(request.json)
 
             return jsonify({"data": response}), 200
         except ValueError as e:

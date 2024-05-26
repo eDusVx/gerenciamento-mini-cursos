@@ -1,6 +1,6 @@
 import hashlib
 from enum import Enum
-from datetime import datetime, date
+from datetime import date
 
 
 class TipoAcesso(Enum):
@@ -16,7 +16,7 @@ class Sexo(Enum):
 
 class Usuario:
     def __init__(
-        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str
+        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: date, sexo: Sexo, ra: str
     ):
         self.__cpf = cpf
         self.nome = nome
@@ -103,7 +103,7 @@ class Usuario:
     def dataNascimento(self, dataNascimento):
         if not dataNascimento:
             raise ValueError("Data de nascimento não informada!")
-        if not isinstance(dataNascimento, (date, datetime)):
+        if not isinstance(dataNascimento, date):
             raise ValueError("Data de nascimento inválida!")
         self.__dataNascimento = dataNascimento
     
@@ -127,7 +127,7 @@ class Usuario:
         return hashlib.sha256(senha.encode()).hexdigest()
 
     @staticmethod
-    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str):
+    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: date, sexo: Sexo, ra: str):
         return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra)
 
     def validarSenha(self, senha: str) -> bool:
