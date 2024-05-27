@@ -1,5 +1,5 @@
 from interceptors.LoggerInterceptor import LoggerInterceptor
-from ...domain.repositories.UsuarioRepository import UserRepositoryInteface
+from ...domain.repositories.CursoRepository import CursoRepositoryInteface
 from ...domain.Curso import Curso
 
 class RegistrarCursoUseCaseRequest:
@@ -26,15 +26,12 @@ class RegistrarCursoUseCaseRequest:
 
 @LoggerInterceptor()
 class RegistrarCursoUsecase:
-    def __init__(self, usuario_repository: UserRepositoryInteface):
-        self.usuario_repository = usuario_repository
+    def __init__(self, cursoRepository: CursoRepositoryInteface):
+        self.cursoRepository = cursoRepository
 
     async def execute(self, request: RegistrarCursoUseCaseRequest) -> str:
         try:
-            professor = self.usuario_repository.find(request["professor"])
-
-            if professor is None:
-                raise ValueError("Nenhum professor encontrado com esse id!")
+        
             curso = Curso.create(
                 nome=request["nome"],
                 descricao=request["descricao"],
@@ -44,7 +41,9 @@ class RegistrarCursoUsecase:
                 cursoRelacionado=request["cursoRelacionado"],
                 status=request["status"]
             )
-            # TODO SALVAR CURSO NA BASE
+            
+            self.cursoRepository.save(curso)
+
             return curso.toDto()
         except Exception as e:
             raise e
