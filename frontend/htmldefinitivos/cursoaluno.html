@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCursos - Cursos (Aluno)</title>
+    <link rel="stylesheet" href="static/cursoaluno.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="imagens/logobcc.jpg" alt="BCCursos">
+        </div>
+        <div class="tagline">
+            <em>"A arte de educar"</em>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Cursos</h2>
+        <ul id="lista-cursos">
+            <li>Curso 1</li>
+            <li>Curso 2</li>
+            <li>Curso 3</li>
+            <li>Curso 4</li>
+            <li>Curso 5</li>
+        </ul>
+        <div class="section">
+            <h3>Opções</h3>
+            <div class="form-group">
+                <button onclick="visualizarMateriais()">Visualizar Materiais</button>
+            </div>
+            <div class="form-group">
+                <button onclick="visualizarAvaliacoes()">Visualizar Avaliações</button>
+            </div>
+            <div class="form-group">
+                <button onclick="visualizarPresencas()">Visualizar Presenças e Faltas</button>
+            </div>
+        </div>
+    </div>
+    <div class="dados-aluno">
+        <h3>Dados do Aluno</h3>
+        <p>Nome: João da Silva</p>
+        <p>RA: 123456</p>
+        <p>Curso: Engenharia de Software</p>
+        <p>E-mail: joao.silva@exemplo.com</p>
+    </div>
+    <script>
+
+        function visualizarMateriais() {
+                var listaCursos = ['Curso 1', 'Curso 2', 'Curso 3','Curso 4','Curso 5'];
+                var listaHTML = '<h3>Lista de Cursos</h3><ul>';
+                listaCursos.forEach(function(curso) {
+                    listaHTML += '<li><a href="#" onclick="visualizarMateriaisDoCurso(\'' + curso + '\')">' + curso + '</a></li>';
+                });
+                listaHTML += '</ul>';
+
+                var dadosAluno = document.querySelector('.dados-aluno');
+                var containerCursos = document.createElement('div');
+                containerCursos.innerHTML = listaHTML;
+                dadosAluno.parentNode.insertBefore(containerCursos, dadosAluno.nextSibling);
+            }
+
+        function visualizarMateriaisDoCurso(curso) {
+
+            alert('Visualizando materiais do curso: ' + curso);
+        }
+
+        function visualizarAvaliacoes() {
+                var listaAvaliacoes = [
+                    { curso: 'LTP', avaliacao: 'Avaliação 1:MS' },
+                    { curso: 'BD II', avaliacao: 'Avaliação 3: MM' },
+                    { curso: 'ENG. SOFT', avaliacao: 'Avaliação 3: SS' },
+
+                ];
+
+                var listaHTML = '<h3>Lista de Avaliações</h3><ul>';
+                listaAvaliacoes.forEach(function(item) {
+                    listaHTML += '<li>' + item.curso + ': ' + item.avaliacao + '</li>';
+                });
+                listaHTML += '</ul>';
+
+                var dadosAluno = document.querySelector('.dados-aluno');
+                var containerAvaliacoes = document.createElement('div');
+                containerAvaliacoes.innerHTML = listaHTML;
+                dadosAluno.parentNode.insertBefore(containerAvaliacoes, dadosAluno.nextSibling);
+            }
+
+
+        function visualizarPresencas() {
+            var listaPresencas = [
+                { curso: 'Matemática', status: 'Presença' },
+                { curso: 'Português', status: 'Presença' },
+                { curso: 'História', status: 'Falta' },
+
+            ];
+
+            var listaHTML = '<h3>Presenças e Faltas</h3><ul>';
+            listaPresencas.forEach(function(item) {
+                listaHTML += '<li>' + item.curso + ': ' + item.status + '</li>';
+            });
+            listaHTML += '</ul>';
+
+            var dadosAluno = document.querySelector('.dados-aluno');
+            var containerPresencas = document.createElement('div');
+            containerPresencas.innerHTML = listaHTML;
+            dadosAluno.parentNode.insertBefore(containerPresencas, dadosAluno.nextSibling);
+        }
+    </script>
+</body>
+</html>
+
