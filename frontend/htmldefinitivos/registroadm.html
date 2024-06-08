@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCursos - Registro de Administrador</title>
+    <link rel="stylesheet" href="static/registroadm.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="imagens/logobcc.jpg" alt="BCCursos">
+        </div>
+        <div class="tagline">
+            <em>"A arte de educar"</em>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Dados do novo administrador</h2>
+        <form>
+            <div class="form-group">
+                <label for="nome-completo">Nome Completo:</label>
+                <input type="text" id="nome-completo" name="nome-completo" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required>
+            </div>
+            <div class="form-group">
+                <label for="data-nascimento">Data de Nascimento:</label>
+                <input type="date" id="data-nascimento" name="data-nascimento" required>
+            </div>
+            <div class="form-group">
+                <label for="departamento">Departamento:</label>
+                <input type="text" id="departamento" name="departamento" required>
+            </div>
+            <div class="form-group">
+                <label for="email-institucional">Email Institucional:</label>
+                <input type="email" id="email-institucional" name="email-institucional" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Registrar Administrador</button>
+            </div>
+        </form>
+     </div>
+     <div class="image-container">
+            <img src="imagens/registroimg.gif" alt="Imagem lateral" class="side-image">
+     </div>
+</body>
