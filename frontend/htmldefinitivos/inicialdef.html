@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCCursos - Sistema de Cursos</title>
+    <link rel="stylesheet" href="static/inicial.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="imagens/logobcc.jpg" alt="BCCursos">
+        </div>
+        <div class="login-form">
+            <input type="text" placeholder="RA" id="ra">
+            <input type="password" placeholder="Senha" id="senha">
+            <button onclick="entrar()">Entrar</button>
+            <button onclick="registrar()">Registrar aluno</button>
+        </div>
+    </header>
+    <div class="forgot-password">
+        <a href="esqueci_senha.html">Esqueci minha senha</a>
+    </div>
+    <div class="gif-container">
+        <img src="imagens/bccursos.gif" alt="BCCursos GIF" width="470" height="470">
+    </div>
+    <script>
+        function entrar() {
+            var ra = document.getElementById('ra').value;
+            var senha = document.getElementById('senha').value;
+
+            
+            if (ra === '123456' && senha === 'senha123') {
+                alert('Login bem-sucedido! Redirecionando para a página correta...');
+                redirecionarPagina(ra);
+            } else {
+                alert('RA ou senha incorretos.');
+            }
+        }
+
+        function registrar() {
+            
+            window.location.href = 'registro.html';
+        }
+
+        function redirecionarPagina(ra) {
+            if (ra.startsWith('1')) {
+                window.location.href = 'cursoaluno.html'; 
+            } else if (ra.startsWith('2')) {
+                window.location.href = 'cursoadm.html'; 
+            } else if (ra.startsWith('3')) {
+                window.location.href = 'cursoprofessor.html'; 
+            } else {
+                alert('RA não reconhecido.');
+            }
+        }
+    </script>
+</body>
+</html>
