@@ -16,7 +16,7 @@ header {
 
 .tagline {
     font-style: italic;
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .brand {
@@ -27,21 +27,29 @@ header {
     max-height: 40px;
     margin-right: 10px;
 }
+.container-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+}
 .container {
     padding: 20px;
-    margin: 80px 20px 20px 20px; 
+    margin: 80px 20px 20px 20px;
     margin-top: 20px;
-    width: 100%;
+    margin-right: 20px;
+    width: 60%;
     max-width: 400px;
-
+}
 .container h2 {
     margin: 0 0 20px 0;
     font-size: 20px;
-    text-decoration: underline;
 }
 
 .radio-label {
     margin-right: 10px;
+    margin-bottom: 5px;
+    font-size: 12px;
 }
 .radio-group {
     display: flex;
@@ -49,37 +57,41 @@ header {
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     color: #FF0000;
     font-weight: bold;
-    text-decoration: underline;
 }
 
 .form-group select {
-    width: 100%;
-    padding: 8px;
+    width: 44%;
+    padding: 3px;
     box-sizing: border-box;
 }
 
 .form-group select {
     height: 34px;
 }
-
+.side-image {
+    width: 600px;
+    height: auto;
+    margin-left: 800px;
+    margin-top: -8000px;
+}
 .form-group button {
     width: 100%;
     padding: 10px;
     border: none;
-    background-color: #FF0000 
+    background-color: #FF0000
     color: white;
     cursor: pointer;
     font-size: 16px;
 }
 
 .form-group button:hover {
-    background-color: #FF0000; 
+    background-color: #FF0000;
 }
