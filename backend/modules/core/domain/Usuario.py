@@ -123,6 +123,18 @@ class Usuario:
         
         self.__ra = ra
 
+    def atualizar_usuario(self, nome: str = None, email: str = None, senha: str = None, dataNascimento: datetime = None, sexo: Sexo = None):
+        if nome:
+            self.nome = nome
+        if email:
+            self.email = email
+        if senha:
+            self.senha = senha
+        if dataNascimento:
+            self.dataNascimento = dataNascimento 
+        if sexo:
+            self.sexo = sexo
+
     @staticmethod
     def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str):
         return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra)

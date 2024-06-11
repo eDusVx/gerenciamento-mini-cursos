@@ -7,6 +7,7 @@ class CoreController:
     def __init__(self):
         self.registrarCursoUseCase = UseCaseFactory.createRegistrarCursoUseCase()
         self.removerUsuarioUseCase = UseCaseFactory.createRemoverUsuarioUseCase()
+        self.atualizarUsuarioUseCase = UseCaseFactory.createAtualizarUsuarioUseCase()
 
     @jwt_required()
     async def registrarCurso(self):
@@ -33,6 +34,20 @@ class CoreController:
             return jsonify({"error": str(e)}), 500
 
     @jwt_required()
+    async def atualizarUsuario(self):
+        try:
+            request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
+
+            response = await self.atualizarUsuarioUseCase.execute(request.json)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+
+    @jwt_required()
     async def hello_world(self):
         try:
             return jsonify({"data": "Hello World!"}), 200
@@ -53,6 +68,11 @@ coreController.add_url_rule(
     "/core/remover-usuario",
     view_func=CoreController().removerUsuario,
     methods=["DELETE"],
+)
+coreController.add_url_rule(
+    "/core/atualizar-usuario",
+    view_func=CoreController().atualizarUsuario,
+    methods=["PUT"],
 )
 coreController.add_url_rule(
     "/core/hello",

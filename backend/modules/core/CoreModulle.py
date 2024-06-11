@@ -4,6 +4,7 @@ from .infra.repositories.CursoRepository import CursoRepositoryImpl
 from .domain.repositories.CursoRepository import CursoRepositoryInteface
 from .application.useCases.RegistrarCursoUseCase import RegistrarCursoUsecase
 from .application.useCases.RemoverUsuarioUseCase import RemoverUsuarioUsecase
+from .application.useCases.AtualizarUsuarioUseCase import AtualizarUsuarioUseCase
 from .infra.mappers.UsuarioMapper import UsuarioMapper
 from .infra.mappers.CursoMapper import CursoMapper
 
@@ -28,3 +29,7 @@ class UseCaseFactory:
     def createRemoverUsuarioUseCase() -> RemoverUsuarioUsecase:
         user_repository = DependencyContainer.provide_user_repository()
         return RemoverUsuarioUsecase(user_repository)
+    
+    def createAtualizarUsuarioUseCase() -> AtualizarUsuarioUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        return AtualizarUsuarioUseCase(user_repository)

@@ -10,3 +10,6 @@ class UserRepositoryInteface:
 
     def remove(self, userId) -> str:
         pass
+
+    def update(self, user: Usuario) -> str:
+        pass
