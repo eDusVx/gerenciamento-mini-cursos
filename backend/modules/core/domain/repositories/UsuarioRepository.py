@@ -7,3 +7,6 @@ class UserRepositoryInteface:
 
     def find(self, userId: str) -> Usuario:
         pass
+
+    def remove(self, userId) -> str:
+        pass

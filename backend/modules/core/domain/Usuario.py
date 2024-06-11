@@ -68,8 +68,12 @@ class Usuario:
     def email(self, email):
         if not email:
             raise ValueError("Email não informado!")
-        if not isinstance(email, str) or "@" not in email or "." not in email:
+        if not isinstance(email, str):
+            raise ValueError("Email deve ser uma string!")
+        if "@" not in email or "." not in email:
             raise ValueError("Email inválido!")
+        if not email.endswith("@sempreceub.com"):
+            raise ValueError("O email institucional deve terminar com @sempreceub.com")
         self.__email = email
 
     @senha.setter

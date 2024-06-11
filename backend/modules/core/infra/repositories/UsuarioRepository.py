@@ -25,7 +25,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
-            sql = "SELECT*FROM usuarios WHERE cpf = %s"
+            sql = "SELECT*FROM usuarios WHERE ra = %s"
             val = (usuarioId,)
             cursor.execute(sql, val)
             result = cursor.fetchone()
@@ -35,7 +35,21 @@ class UserRepositoryImpl(UserRepositoryInteface):
                 return usuario
             else:
                 raise NenhumUsuarioCadastradoException(
-                    f"Nenhum usuário cadastrado para o cpf {usuarioId}"
+                    f"Nenhum usuário cadastrado para o ra {usuarioId}"
                 )
         except Exception as e:
-            raise Exception(f"Erro ao salvar usuário: {e}")
+            raise Exception(f"Erro ao buscar usuário: {e}")
+    
+    def remove(self, usuarioId: str):
+        try:
+            print("REMOVENDO USUARIO", usuarioId)
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = "DELETE FROM usuarios WHERE ra = %s"
+            val = (usuarioId,)
+            print(sql)
+            cursor.execute(sql, val)
+            connection.commit()
+
+        except Exception as e:
+            raise Exception(f"Erro ao deletar usuário: {e}")
