@@ -40,3 +40,16 @@ class UserRepositoryImpl(UserRepositoryInteface):
                 )
         except Exception as e:
             raise Exception(f"Erro ao buscar usuário: {e}")
+    
+    def remove(self, usuarioId: str):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = "DELETE FROM usuarios WHERE ra = %s"
+            val = (usuarioId,)
+            print(sql)
+            cursor.execute(sql, val)
+            connection.commit()
+
+        except Exception as e:
+            raise Exception(f"Erro ao deletar usuário: {e}")
