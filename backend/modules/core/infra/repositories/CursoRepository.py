@@ -85,3 +85,16 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             connection.commit()
         except Exception as e:
             raise Exception(f"Erro ao atualizar curso: {e}")
+    
+    def remove(self, cursoId: str):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = "DELETE FROM curso WHERE id = %s"
+            val = (cursoId,)
+            print(sql)
+            cursor.execute(sql, val)
+            connection.commit()
+
+        except Exception as e:
+            raise Exception(f"Erro ao deletar curso: {e}")

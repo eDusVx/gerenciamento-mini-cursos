@@ -10,3 +10,6 @@ class CursoRepositoryInteface:
 
     def find(self, cursoId: str) -> Curso:
         pass
+
+    def remove(self, cursoId: str) -> str:
+        pass
