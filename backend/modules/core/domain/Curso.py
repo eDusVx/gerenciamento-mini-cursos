@@ -13,9 +13,13 @@ class Curso:
         cursoRelacionado: str,
         status: str,
         alunos: Optional[List[str]] = None,
-        aula: Optional[List[Aula]] = None
+        aula: Optional[List[Aula]] = None,
+        id: Optional[uuid.UUID] = None
     ):
-        self.id = uuid.uuid4()
+        if id is None:
+            self.id = uuid.uuid4()
+        else:
+            self.id = id
         self.nome = nome
         self.descricao = descricao
         self.cargaHoraria = cargaHoraria
@@ -25,6 +29,7 @@ class Curso:
         self.status = status
         self.alunos = alunos
         self.aula = aula
+
 
     @property
     def nome(self):
@@ -151,3 +156,54 @@ class Curso:
             "status": self.status,
             "aulas": self.aula 
         }
+    
+    def atualizar_curso(
+        self,
+        nome: Optional[str],
+        descricao: Optional[str],
+        cargaHoraria: Optional[int],
+        professor: Optional[str],
+        numeroVagas: Optional[int],
+        cursoRelacionado: Optional[str],
+        status: Optional[str],
+    ):  
+        if nome is not None:
+            self.nome = nome
+        if descricao is not None:
+            self.descricao = descricao
+        if cargaHoraria is not None:
+            self.cargaHoraria = cargaHoraria
+        if professor is not None:
+            self.professor = professor
+        if numeroVagas is not None:
+            self.numeroVagas = numeroVagas
+        if cursoRelacionado is not None:
+            self.cursoRelacionado = cursoRelacionado
+        if status is not None:
+            self.status = status
+    
+    @staticmethod
+    def carregar(
+        id: uuid.UUID,
+        nome: str,
+        descricao: str,
+        cargaHoraria: int,
+        professor: str,
+        numeroVagas: int,
+        cursoRelacionado: str,
+        status: str,
+        alunos: Optional[List[str]] = None,
+        aula: Optional[List[Aula]] = None
+    ):
+        return Curso(
+            nome,
+            descricao,
+            cargaHoraria,
+            professor,
+            numeroVagas,
+            cursoRelacionado,
+            status,
+            alunos,
+            aula,
+            id
+        )

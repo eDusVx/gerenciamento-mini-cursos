@@ -5,6 +5,7 @@ from .domain.repositories.CursoRepository import CursoRepositoryInteface
 from .application.useCases.RegistrarCursoUseCase import RegistrarCursoUsecase
 from .application.useCases.RemoverUsuarioUseCase import RemoverUsuarioUsecase
 from .application.useCases.AtualizarUsuarioUseCase import AtualizarUsuarioUseCase
+from .application.useCases.AtualizarCursoUseCase import AtualizarCursoUseCase
 from .infra.mappers.UsuarioMapper import UsuarioMapper
 from .infra.mappers.CursoMapper import CursoMapper
 
@@ -25,6 +26,10 @@ class UseCaseFactory:
     def createRegistrarCursoUseCase() -> RegistrarCursoUsecase:
         curso_repository = DependencyContainer.provide_curso_repository()
         return RegistrarCursoUsecase(curso_repository)
+
+    def createAtualizarCursoUseCase() -> AtualizarCursoUseCase:
+        curso_repository = DependencyContainer.provide_curso_repository()
+        return AtualizarCursoUseCase(curso_repository)
 
     def createRemoverUsuarioUseCase() -> RemoverUsuarioUsecase:
         user_repository = DependencyContainer.provide_user_repository()
