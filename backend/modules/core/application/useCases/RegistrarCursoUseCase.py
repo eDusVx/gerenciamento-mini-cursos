@@ -31,7 +31,8 @@ class RegistrarCursoUsecase:
 
     async def execute(self, request: RegistrarCursoUseCaseRequest) -> str:
         try:
-        
+            
+            print("antes")
             curso = Curso.create(
                 nome=request["nome"],
                 descricao=request["descricao"],
@@ -41,7 +42,7 @@ class RegistrarCursoUsecase:
                 cursoRelacionado=request["cursoRelacionado"],
                 status=request["status"]
             )
-            
+
             self.cursoRepository.save(curso)
 
             return curso.toDto()

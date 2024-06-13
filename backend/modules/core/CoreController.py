@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt
 from .CoreModulle import UseCaseFactory
+from .application.queries.BuscarCursosQuery import BuscarCursosQueryRequest
 
 
 class CoreController:
@@ -10,6 +11,7 @@ class CoreController:
         self.atualizarUsuarioUseCase = UseCaseFactory.createAtualizarUsuarioUseCase()
         self.atualizarCursoUseCase = UseCaseFactory.createAtualizarCursoUseCase()
         self.removerCursoUseCase = UseCaseFactory.createRemoverCursoUseCase()
+        self.buscarCursosQuery = UseCaseFactory.createBuscarCursosQuery()
 
     @jwt_required()
     async def registrarCurso(self):
@@ -73,6 +75,18 @@ class CoreController:
             return jsonify({"error": str(e)}), 400
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+    
+    @jwt_required()
+    async def buscarCursos(self):
+        try:
+            request_body = BuscarCursosQueryRequest(request.args.get('status'), int(request.args.get('pagina')))
+            response = await self.buscarCursosQuery.execute(request_body)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     @jwt_required()
     async def hello_world(self):
@@ -114,5 +128,11 @@ coreController.add_url_rule(
 coreController.add_url_rule(
     "/core/hello",
     view_func=CoreController().hello_world,
+    methods=["GET"],
+)
+
+coreController.add_url_rule(
+    "/core/buscar-cursos",
+    view_func=CoreController().buscarCursos,
     methods=["GET"],
 )

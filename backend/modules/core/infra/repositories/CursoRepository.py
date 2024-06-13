@@ -2,6 +2,7 @@ from ...domain.Curso import Curso
 from ...domain.repositories.CursoRepository import CursoRepositoryInteface
 from dbconfig import Database
 from ..mappers.CursoMapper import CursoMapper
+from datetime import datetime
 
 
 class CursoRepositoryImpl(CursoRepositoryInteface):
@@ -12,7 +13,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
-            sql = "INSERT INTO curso (id, nome_curso, descricao, duracao, curso_relacionado, status_curso, quantidade_max_alunos) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO curso (id, nome_curso, descricao, duracao, curso_relacionado, status_curso, quantidade_max_alunos, data_inclusao, data_modificacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
             val = (
                 str(curso.id),
                 curso.nome,
@@ -20,7 +21,9 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
                 curso.cargaHoraria,
                 curso.cursoRelacionado,
                 curso.status,
-                curso.numeroVagas
+                curso.numeroVagas,
+                curso.dataInclusao,
+                datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
             )
             cursor.execute(sql, val)
             connection.commit()
@@ -47,6 +50,44 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
                 )
         except Exception as e:
             raise Exception(f"Erro ao buscar usuário: {e}")
+    
+    def findAll(self, pagina: int, tamanho_pagina: int = 5):
+        try:
+            cursos = []
+            connection = Database.obter_conexao()
+            cursor = connection.cursor(dictionary=True)
+            offset = (pagina - 1) * tamanho_pagina
+            sql = "SELECT * FROM curso order by data_inclusao ASC LIMIT %s OFFSET %s"
+            cursor.execute(sql, (tamanho_pagina, offset))
+            result = cursor.fetchall()
+            if len(result) == 0:
+                raise ValueError("Nenhum Curso cadastrado")
+            for row in result:
+                curso = self.cursoMapper.modelToDomain(row)
+                cursos.append(curso)
+            return cursos
+        except Exception as e:
+            raise Exception(f"Erro ao buscar cursos: {e}")
+
+    
+    def findByStatus(self, status: str, pagina: int, tamanho_pagina: int = 5):
+        try:
+            cursos = []
+            connection = Database.obter_conexao()
+            cursor = connection.cursor(dictionary=True)
+            offset = (pagina - 1) * tamanho_pagina
+            sql = "SELECT * FROM curso WHERE status_curso = %s order by data_inclusao ASC LIMIT %s OFFSET %s"
+            cursor.execute(sql, (status, tamanho_pagina, offset))
+            result = cursor.fetchall()
+            if len(result) == 0:
+                raise ValueError("Nenhum Curso cadastrado")
+            for row in result:
+                curso = self.cursoMapper.modelToDomain(row)
+                cursos.append(curso)
+            return cursos
+        except Exception as e:
+            raise Exception(f"Erro ao buscar cursos: {e}")
+
     
 
     def update(self, curso: Curso):

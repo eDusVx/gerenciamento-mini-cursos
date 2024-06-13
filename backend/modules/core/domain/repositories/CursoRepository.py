@@ -11,5 +11,11 @@ class CursoRepositoryInteface:
     def find(self, cursoId: str) -> Curso:
         pass
 
+    def findAll(self, pagina: int) -> list:
+        pass
+
     def remove(self, cursoId: str) -> str:
+        pass
+
+    def findByStatus(self, status: str, pagina: int) -> list:
         pass

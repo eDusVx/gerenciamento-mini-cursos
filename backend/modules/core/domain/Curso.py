@@ -1,6 +1,7 @@
 import uuid
 from typing import List, Optional
 from .Aula import Aula
+from datetime import date, datetime
 
 class Curso:
     def __init__(
@@ -14,7 +15,8 @@ class Curso:
         status: str,
         alunos: Optional[List[str]] = None,
         aula: Optional[List[Aula]] = None,
-        id: Optional[uuid.UUID] = None
+        id: Optional[uuid.UUID] = None,
+        dataInclsuao: Optional[datetime] = None,
     ):
         if id is None:
             self.id = uuid.uuid4()
@@ -29,11 +31,23 @@ class Curso:
         self.status = status
         self.alunos = alunos
         self.aula = aula
+        self.dataInclusao = dataInclsuao
 
 
     @property
     def nome(self):
         return self.__nome
+
+    @property
+    def dataInclusao(self):
+        return self.__dataInclusao
+        
+    @dataInclusao.setter
+    def dataInclusao(self, dataInclusao: Optional[datetime]):
+        if dataInclusao is None:
+            self.__dataInclusao = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        else:
+            self.__dataInclusao = dataInclusao
 
     @nome.setter
     def nome(self, nome):
@@ -150,6 +164,7 @@ class Curso:
             "descricao": self.descricao,
             "cargaHoraria": self.cargaHoraria,
             "professor": self.professor,
+            "dataInclusao": self.dataInclusao,
             "numeroVagas": self.numeroVagas,
             "alunos": self.alunos,
             "cursoRelacionado": self.cursoRelacionado,
