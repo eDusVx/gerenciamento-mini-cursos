@@ -1,9 +1,12 @@
 import uuid
-from datetime import date
+from typing import Optional
 
 class Aula:
-    def __init__(self, nome: str, descricao: str, conteudo: str, duracao: date):
-        self.id = uuid.uuid4()
+    def __init__(self, nome: str, descricao: str, conteudo: str, duracao: int, id: Optional[uuid.UUID] = None):
+        if id is None:
+            self.id = uuid.uuid4()
+        else:
+            self.id = id
         self.nome = nome
         self.descricao = descricao
         self.conteudo = conteudo
@@ -47,10 +50,34 @@ class Aula:
     def duracao(self, duracao):
         if not duracao:
             raise ValueError("Duração da aula não informada!")
-        if not isinstance(duracao, date):
-            raise ValueError("Duração deve ser uma data!")
         self.__duracao = duracao
 
     @staticmethod
-    def create(nome: str, descricao: str, conteudo: str, duracao: date):
+    def create(nome: str, descricao: str, conteudo: str, duracao: int):
         return Aula(nome, descricao, conteudo, duracao)
+
+    @staticmethod
+    def carregar(
+        id: uuid.UUID,
+        nome: str,
+        descricao: str,
+        conteudo: str,
+        duracao: int
+    ):
+        return Aula(
+            nome,
+            descricao,
+            conteudo,
+            duracao,
+            id
+        )
+
+    def toDto(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "descricao": self.descricao,
+            "conteudo": self.conteudo,
+            "duracao": self.duracao 
+        }
+    

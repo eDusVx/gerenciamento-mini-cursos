@@ -1,7 +1,8 @@
 import uuid
 from typing import List, Optional
 from .Aula import Aula
-from datetime import date, datetime
+from datetime import datetime
+from .Usuario import Usuario
 
 class Curso:
     def __init__(
@@ -13,8 +14,8 @@ class Curso:
         numeroVagas: int,
         cursoRelacionado: str,
         status: str,
-        alunos: Optional[List[str]] = None,
-        aula: Optional[List[Aula]] = None,
+        alunos: Optional[List[str]] = [],
+        aula: Optional[List[Aula]] = [],
         id: Optional[uuid.UUID] = None,
         dataInclusao: Optional[datetime] = None,
     ):
@@ -123,8 +124,6 @@ class Curso:
 
     @alunos.setter
     def alunos(self, alunos):
-        if alunos is not None and len(alunos) == 0:
-            raise ValueError("Alunos não informados!")
         self.__alunos = alunos
 
     @property
@@ -133,8 +132,6 @@ class Curso:
 
     @aula.setter
     def aula(self, aula):
-        if aula is not None and len(aula) == 0:
-            raise ValueError("Aulas não informadas!")
         self.__aula = aula
 
     @staticmethod
@@ -169,7 +166,7 @@ class Curso:
             "alunos": self.alunos,
             "cursoRelacionado": self.cursoRelacionado,
             "status": self.status,
-            "aulas": self.aula 
+            "aulas": [aula.toDto() for aula in self.aula]
         }
     
     def atualizar_curso(
@@ -207,8 +204,8 @@ class Curso:
         numeroVagas: int,
         cursoRelacionado: str,
         status: str,
-        alunos: Optional[List[str]] = None,
-        aula: Optional[List[Aula]] = None
+        alunos: Optional[List[str]],
+        aula: Optional[List[Aula]]
     ):
         return Curso(
             nome,
@@ -222,3 +219,8 @@ class Curso:
             aula,
             id
         )
+    
+    def inscreverAluno(self, aluno: Usuario):
+        if aluno.ra in self.alunos:
+            raise ValueError(f"O Aluno de ra {aluno.ra} já está inscrito no curso.")
+        self.alunos.append(aluno.ra)

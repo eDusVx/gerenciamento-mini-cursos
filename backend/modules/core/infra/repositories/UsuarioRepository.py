@@ -35,7 +35,6 @@ class UserRepositoryImpl(UserRepositoryInteface):
             cursor = connection.cursor()
             sql = "DELETE FROM usuarios WHERE ra = %s"
             val = (usuarioId,)
-            print(sql)
             cursor.execute(sql, val)
             connection.commit()
 

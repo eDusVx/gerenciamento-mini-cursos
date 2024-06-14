@@ -22,3 +22,6 @@ class CursoRepositoryInteface:
 
     def findPagesNumber(self,) -> int:
         pass
+
+    def inserirAlunoCurso(self, curso: Curso) -> str:
+        pass

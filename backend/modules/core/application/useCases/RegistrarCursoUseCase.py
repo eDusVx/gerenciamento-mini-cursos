@@ -31,8 +31,6 @@ class RegistrarCursoUsecase:
 
     async def execute(self, request: RegistrarCursoUseCaseRequest) -> str:
         try:
-            
-            print("antes")
             curso = Curso.create(
                 nome=request["nome"],
                 descricao=request["descricao"],

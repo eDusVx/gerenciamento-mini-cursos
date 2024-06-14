@@ -9,8 +9,10 @@ from .application.useCases.AtualizarCursoUseCase import AtualizarCursoUseCase
 from .application.useCases.RemoverCursoUseCase import RemoverCursoUsecase
 from .application.queries.BuscarCursosQuery import BuscarCursosQuery
 from .application.queries.BuscarUsuariosQuery import BuscarUsuariosQuery
+from .application.useCases.InscreverAlunoCursoUseCase import InscreverAlunoCursoUseCase
 from .infra.mappers.UsuarioMapper import UsuarioMapper
 from .infra.mappers.CursoMapper import CursoMapper
+from .infra.mappers.AulaMapper import AulaMapper
 
 
 class DependencyContainer:
@@ -20,7 +22,8 @@ class DependencyContainer:
         return UserRepositoryImpl(usuarioMapper)
     
     def provide_curso_repository() -> CursoRepositoryInteface:
-        cursoMapper = CursoMapper()
+        aulaMapper = AulaMapper()
+        cursoMapper = CursoMapper(aulaMapper)
         return CursoRepositoryImpl(cursoMapper)
 
 
@@ -53,5 +56,10 @@ class UseCaseFactory:
     def createBuscarUsuariosQuery() -> BuscarUsuariosQuery:
         user_repository = DependencyContainer.provide_user_repository()
         return BuscarUsuariosQuery(user_repository)
+    
+    def createInscreverAlunoCursoUseCase() -> InscreverAlunoCursoUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        curso_repository = DependencyContainer.provide_curso_repository()
+        return InscreverAlunoCursoUseCase(curso_repository, user_repository)
     
 

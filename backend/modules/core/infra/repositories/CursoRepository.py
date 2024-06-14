@@ -38,20 +38,31 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
-            sql = "SELECT*FROM curso WHERE id = %s"
-            val = (cursoId,)
-            cursor.execute(sql, val)
-            result = cursor.fetchone()
-            print(result)
-            if result:
-                curso = self.cursoMapper.modelToDomain(result)
+            
+            sql_curso = "SELECT * FROM curso WHERE id = %s"
+            val_curso = (cursoId,)
+            cursor.execute(sql_curso, val_curso)
+            result_curso = cursor.fetchone()
+            
+            if result_curso:
+                sql_alunos = "SELECT * FROM usuarios_curso where curso_id = %s"
+                val_alunos = (cursoId,)
+                cursor.execute(sql_alunos, val_alunos)
+                result_alunos = cursor.fetchall()
+                result_curso["alunos"] = [aluno['usuario_ra'] for aluno in result_alunos]
+
+                sql_aulas = "SELECT * FROM aulas WHERE id_curso = %s"
+                val_aulas = (cursoId,)
+                cursor.execute(sql_aulas, val_aulas)
+                result_aulas = cursor.fetchall()
+                result_curso["aulas"] = result_aulas
+                curso = self.cursoMapper.modelToDomain(result_curso)
                 return curso
             else:
-                raise ValueError(
-                    f"Nenhum Curso cadastrado para o id {cursoId}"
-                )
+                raise ValueError(f"Nenhum Curso cadastrado para o id {cursoId}")
         except Exception as e:
-            raise Exception(f"Erro ao buscar usuário: {e}")
+            raise Exception(f"Erro ao buscar curso: {e}")
+
     
     def findAll(self, pagina: int):
         try:
@@ -66,6 +77,17 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             if len(result) == 0:
                 raise ValueError("Nenhum Curso cadastrado")
             for row in result:
+                sql_alunos = "SELECT * FROM usuarios_curso where curso_id = %s"
+                val_alunos = (row["id"],)
+                cursor.execute(sql_alunos, val_alunos)
+                result_alunos = cursor.fetchall()
+                row["alunos"] = [aluno['usuario_ra'] for aluno in result_alunos]
+
+                sql_aulas = "SELECT * FROM aulas WHERE id_curso = %s"
+                val_aulas = (row["id"],)
+                cursor.execute(sql_aulas, val_aulas)
+                result_aulas = cursor.fetchall()
+                row["aulas"] = result_aulas
                 curso = self.cursoMapper.modelToDomain(row)
                 cursos.append(curso)
             return cursos
@@ -86,6 +108,17 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             if len(result) == 0:
                 raise ValueError("Nenhum Curso cadastrado")
             for row in result:
+                sql_alunos = "SELECT * FROM usuarios_curso where curso_id = %s"
+                val_alunos = (row["id"],)
+                cursor.execute(sql_alunos, val_alunos)
+                result_alunos = cursor.fetchall()
+                row["alunos"] = [aluno['usuario_ra'] for aluno in result_alunos]
+
+                sql_aulas = "SELECT * FROM aulas WHERE id_curso = %s"
+                val_aulas = (row["id"],)
+                cursor.execute(sql_aulas, val_aulas)
+                result_aulas = cursor.fetchall()
+                row["aulas"] = result_aulas
                 curso = self.cursoMapper.modelToDomain(row)
                 cursos.append(curso)
             return cursos
@@ -163,10 +196,21 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             cursor = connection.cursor()
             sql = "DELETE FROM curso WHERE id = %s"
             val = (cursoId,)
-            print(sql)
             cursor.execute(sql, val)
             connection.commit()
 
         except Exception as e:
             raise Exception(f"Erro ao deletar curso: {e}")
     
+    def inserirAlunoCurso(self, curso: Curso):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            if len(curso.alunos) != 0:
+                    for aluno in curso.alunos:
+                        sql = "INSERT IGNORE INTO usuarios_curso (curso_id, usuario_ra, data_inclusao) VALUES (%s, %s, %s)"
+                        val = (str(curso.id), aluno, datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
+                        cursor.execute(sql, val)
+            connection.commit()
+        except Exception as e:
+            raise Exception(f"Erro ao inserir aluno no curso: {e}")

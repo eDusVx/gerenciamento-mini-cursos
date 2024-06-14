@@ -14,6 +14,7 @@ class CoreController:
         self.removerCursoUseCase = UseCaseFactory.createRemoverCursoUseCase()
         self.buscarCursosQuery = UseCaseFactory.createBuscarCursosQuery()
         self.buscarUsuariosQuery = UseCaseFactory.createBuscarUsuariosQuery()
+        self.inscreverAlunoCursoUseCase = UseCaseFactory.createInscreverAlunoCursoUseCase()
 
     @jwt_required()
     async def registrarCurso(self):
@@ -71,6 +72,19 @@ class CoreController:
             request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
 
             response = await self.removerCursoUseCase.execute(request.json)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    
+    @jwt_required()
+    async def inscreverAlunoCurso(self):
+        try:
+            request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
+
+            response = await self.inscreverAlunoCursoUseCase.execute(request.json)
 
             return jsonify({"data": response}), 200
         except ValueError as e:
@@ -153,4 +167,9 @@ coreController.add_url_rule(
     "/core/buscar-usuarios",
     view_func=CoreController().buscarUsuarios,
     methods=["GET"],
+)
+coreController.add_url_rule(
+    "/core/inscrever-aluno-curso",
+    view_func=CoreController().inscreverAlunoCurso,
+    methods=["POST"],
 )
