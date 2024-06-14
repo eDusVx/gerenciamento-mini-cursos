@@ -2,8 +2,6 @@ from ...domain.Curso import Curso
 from .AulaMapper import AulaMapper
 import uuid
 
-
-# TODO Implementar relacão cursos alunos e professores e importar no mapper
 class CursoMapper:
     def __init__(self, aulaMapper: AulaMapper):
         self.aulaMapper = aulaMapper
