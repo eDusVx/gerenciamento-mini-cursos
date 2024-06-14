@@ -19,3 +19,6 @@ class CursoRepositoryInteface:
 
     def findByStatus(self, status: str, pagina: int) -> list:
         pass
+
+    def findPagesNumber(self,) -> int:
+        pass

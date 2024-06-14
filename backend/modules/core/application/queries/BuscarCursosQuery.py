@@ -18,17 +18,18 @@ class BuscarCursosQuery:
     async def execute(self, request: BuscarCursosQueryRequest) -> dict:
         try:
             cursos = []
+            buscarNumeroPaginas = self.curso_repository.findPagesNumber()
             if(request["status"] == None):
                 curso = self.curso_repository.findAll(request["pagina"])
                 for i in curso:
                     cursos.append(i.toDto())
-                return cursos
+                return {"cursos": cursos, "numeroPaginas": buscarNumeroPaginas}
             
             curso = self.curso_repository.findByStatus(request["status"], request["pagina"])
 
             for i in curso:
                 cursos.append(i.toDto())
 
-            return cursos
+            return {"cursos": cursos, "numeroPaginas": buscarNumeroPaginas}
         except Exception as e:
             raise e

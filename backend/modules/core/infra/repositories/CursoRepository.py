@@ -3,6 +3,8 @@ from ...domain.repositories.CursoRepository import CursoRepositoryInteface
 from dbconfig import Database
 from ..mappers.CursoMapper import CursoMapper
 from datetime import datetime
+import os
+import math
 
 
 class CursoRepositoryImpl(CursoRepositoryInteface):
@@ -51,8 +53,9 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao buscar usuário: {e}")
     
-    def findAll(self, pagina: int, tamanho_pagina: int = 5):
+    def findAll(self, pagina: int):
         try:
+            tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
             cursos = []
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
@@ -70,8 +73,9 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             raise Exception(f"Erro ao buscar cursos: {e}")
 
     
-    def findByStatus(self, status: str, pagina: int, tamanho_pagina: int = 5):
+    def findByStatus(self, status: str, pagina: int):
         try:
+            tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
             cursos = []
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
@@ -87,6 +91,27 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             return cursos
         except Exception as e:
             raise Exception(f"Erro ao buscar cursos: {e}")
+    
+    def findPagesNumber(self):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
+
+            if tamanho_pagina <= 0:
+                raise ValueError("TAMANHO_PAGINA must be a positive integer")
+
+            sql = "SELECT count(*) FROM curso"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+
+            if result is None or len(result) == 0:
+                raise ValueError("Failed to fetch count from the database")
+
+            paginas = math.ceil(result[0] / tamanho_pagina)
+            return paginas
+        except Exception as e:
+            raise Exception(f"Erro ao buscar número de páginas: {e}")
 
     
 
@@ -139,3 +164,4 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
 
         except Exception as e:
             raise Exception(f"Erro ao deletar curso: {e}")
+    
