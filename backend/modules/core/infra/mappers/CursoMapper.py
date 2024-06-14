@@ -12,7 +12,6 @@ class CursoMapper:
         aulas = []
         for aula in cursoModel["aulas"]:
             aulas.append(self.aulaMapper.modelToDomain(aula))
-        print(aulas)
         curso = Curso.carregar(
             id=uuid.UUID(cursoModel["id"]),
             nome=cursoModel["nome_curso"],
