@@ -1,5 +1,6 @@
 from enum import Enum
 from datetime import date, datetime
+from typing import Optional
 
 class TipoAcesso(Enum):
     ADMIN = "ADMIN"
@@ -13,20 +14,25 @@ class Sexo(Enum):
 
 class Usuario:
     def __init__(
-        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str
+        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str, dataInclusao: Optional[datetime] = None,
     ):
         self.cpf = cpf
         self.nome = nome
-        self.email = email
+        self.email = email  
         self.senha = senha
         self.tipoAcesso = tipoAcesso
         self.sexo = sexo
-        self.dataNascimento = dataNascimento
+        self.dataNascimento = dataNascimento    	
         self.ra = ra
+        self.dataInclusao = dataInclusao
 
     @property
     def cpf(self):
         return self.__cpf
+
+    @property
+    def dataInclusao(self):
+        return self.__dataInclusao
 
     @property
     def nome(self):
@@ -55,6 +61,13 @@ class Usuario:
     @property
     def ra(self):
         return self.__ra
+
+    @dataInclusao.setter
+    def dataInclusao(self, dataInclusao: Optional[datetime]):
+        if dataInclusao is None:
+            self.__dataInclusao = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        else:
+            self.__dataInclusao = dataInclusao
 
     @nome.setter
     def nome(self, nome):
@@ -138,3 +151,15 @@ class Usuario:
     @staticmethod
     def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str):
         return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra)
+
+    def toDto(self):
+        return {
+            "ra": self.ra,
+            "cpf": self.cpf,
+            "nome": self.nome,
+            "email": self.email,
+            "tipoAcesso": self.tipoAcesso.name,
+            "sexo": self.sexo.name,
+            "dataNascimento": self.dataNascimento,
+            "dataInclusao": self.dataInclusao,
+        }

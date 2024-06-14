@@ -92,8 +92,9 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao buscar cursos: {e}")
     
-    def findPagesNumber(self):
+    def findPagesNumber(self, status: str):
         try:
+            val = None
             connection = Database.obter_conexao()
             cursor = connection.cursor()
             tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
@@ -102,7 +103,11 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
                 raise ValueError("TAMANHO_PAGINA must be a positive integer")
 
             sql = "SELECT count(*) FROM curso"
-            cursor.execute(sql)
+
+            if status is not None:
+                sql = sql + " WHERE status_curso = %s"
+                val = (status,)
+            cursor.execute(sql, val)
             result = cursor.fetchone()
 
             if result is None or len(result) == 0:

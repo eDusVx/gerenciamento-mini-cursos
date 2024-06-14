@@ -16,7 +16,7 @@ class Curso:
         alunos: Optional[List[str]] = None,
         aula: Optional[List[Aula]] = None,
         id: Optional[uuid.UUID] = None,
-        dataInclsuao: Optional[datetime] = None,
+        dataInclusao: Optional[datetime] = None,
     ):
         if id is None:
             self.id = uuid.uuid4()
@@ -31,7 +31,7 @@ class Curso:
         self.status = status
         self.alunos = alunos
         self.aula = aula
-        self.dataInclusao = dataInclsuao
+        self.dataInclusao = dataInclusao
 
 
     @property

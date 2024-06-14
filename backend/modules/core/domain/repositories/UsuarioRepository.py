@@ -2,9 +2,6 @@ from ...domain.Usuario import Usuario
 
 
 class UserRepositoryInteface:
-    def save(self, user: Usuario) -> str:
-        pass
-
     def find(self, userId: str) -> Usuario:
         pass
 
@@ -12,4 +9,13 @@ class UserRepositoryInteface:
         pass
 
     def update(self, user: Usuario) -> str:
+        pass
+
+    def findPagesNumber(self,) -> int:
+        pass
+
+    def findAll(self, pagina: int) -> list:
+        pass
+
+    def findByTipoAcesso(self, tipoAcesso: str, pagina: int) -> list:
         pass

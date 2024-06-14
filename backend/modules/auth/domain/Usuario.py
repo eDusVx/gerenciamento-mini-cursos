@@ -1,7 +1,7 @@
 import hashlib
 from enum import Enum
-from datetime import date
-
+from datetime import date, datetime
+from typing import Optional
 
 class TipoAcesso(Enum):
     ADMIN = "ADMIN"
@@ -16,7 +16,7 @@ class Sexo(Enum):
 
 class Usuario:
     def __init__(
-        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: date, sexo: Sexo, ra: str
+        self, cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: date, sexo: Sexo, ra: str, dataInclusao: Optional[datetime] = None,
     ):
         self.__cpf = cpf
         self.nome = nome
@@ -26,10 +26,15 @@ class Usuario:
         self.sexo = sexo
         self.dataNascimento = dataNascimento
         self.ra = ra
+        self.dataInclusao = dataInclusao
 
     @property
     def cpf(self):
         return self.__cpf
+
+    @property
+    def dataInclusao(self):
+        return self.__dataInclusao
 
     @property
     def nome(self):
@@ -58,6 +63,13 @@ class Usuario:
     @property
     def ra(self):
         return self.__ra
+
+    @dataInclusao.setter
+    def dataInclusao(self, dataInclusao: Optional[datetime]):
+        if dataInclusao is None:
+            self.__dataInclusao = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        else:
+            self.__dataInclusao = dataInclusao
 
     @nome.setter
     def nome(self, nome):

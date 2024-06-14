@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt
 from .CoreModulle import UseCaseFactory
 from .application.queries.BuscarCursosQuery import BuscarCursosQueryRequest
+from .application.queries.BuscarUsuariosQuery import BuscarUsuariosQueryRequest
 
 
 class CoreController:
@@ -12,6 +13,7 @@ class CoreController:
         self.atualizarCursoUseCase = UseCaseFactory.createAtualizarCursoUseCase()
         self.removerCursoUseCase = UseCaseFactory.createRemoverCursoUseCase()
         self.buscarCursosQuery = UseCaseFactory.createBuscarCursosQuery()
+        self.buscarUsuariosQuery = UseCaseFactory.createBuscarUsuariosQuery()
 
     @jwt_required()
     async def registrarCurso(self):
@@ -87,6 +89,18 @@ class CoreController:
             return jsonify({"error": str(e)}), 400
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+    
+    @jwt_required()
+    async def buscarUsuarios(self):
+        try:
+            request_body = BuscarUsuariosQueryRequest(request.args.get('tipoAcesso'), int(request.args.get('pagina')))
+            response = await self.buscarUsuariosQuery.execute(request_body)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     @jwt_required()
     async def hello_world(self):
@@ -130,9 +144,13 @@ coreController.add_url_rule(
     view_func=CoreController().hello_world,
     methods=["GET"],
 )
-
 coreController.add_url_rule(
     "/core/buscar-cursos",
     view_func=CoreController().buscarCursos,
+    methods=["GET"],
+)
+coreController.add_url_rule(
+    "/core/buscar-usuarios",
+    view_func=CoreController().buscarUsuarios,
     methods=["GET"],
 )

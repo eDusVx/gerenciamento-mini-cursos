@@ -18,7 +18,7 @@ class BuscarCursosQuery:
     async def execute(self, request: BuscarCursosQueryRequest) -> dict:
         try:
             cursos = []
-            buscarNumeroPaginas = self.curso_repository.findPagesNumber()
+            buscarNumeroPaginas = self.curso_repository.findPagesNumber(request["status"] if request["status"] else None)
             if(request["status"] == None):
                 curso = self.curso_repository.findAll(request["pagina"])
                 for i in curso:

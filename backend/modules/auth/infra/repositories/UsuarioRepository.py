@@ -2,6 +2,7 @@ from ...domain.repositories.UsuarioRepository import UserRepositoryInteface
 from ..mappers.UsuarioMapper import UsuarioMapper
 from dbconfig import Database
 from ...domain import Usuario
+from datetime import datetime
 
 
 class NenhumUsuarioCadastradoException(Exception):
@@ -37,8 +38,8 @@ class UserRepositoryImpl(UserRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
-            sql = "INSERT INTO usuarios (cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-            val = (user.cpf, user.nome, user.email, user.senha, user.tipoAcesso.name, user.dataNascimento, user.sexo.name, user.ra)
+            sql = "INSERT INTO usuarios (cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra, data_inclusao, data_modificacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            val = (user.cpf, user.nome, user.email, user.senha, user.tipoAcesso.name, user.dataNascimento, user.sexo.name, user.ra, user.dataInclusao, datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
             cursor.execute(sql, val)
             connection.commit()
             cursor.close()
