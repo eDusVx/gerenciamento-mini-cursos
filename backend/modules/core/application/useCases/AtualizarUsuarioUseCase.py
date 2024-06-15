@@ -26,7 +26,7 @@ class AtualizarUsuarioUseCase:
             if request["tipoAcesso"] != "ADMIN":
                 raise ValueError("Somente administradores podem atualizar usuários")
             
-            usuario = self.usuario_repository.find(request["ra"])
+            usuario = self.usuario_repository.buscarPorId(request["ra"])
 
             if(usuario == None):
                 raise ValueError("Usuário não encontrado")
@@ -39,7 +39,7 @@ class AtualizarUsuarioUseCase:
                 sexo=Sexo[request["sexo"]],
             )
 
-            self.usuario_repository.update(usuario)
+            self.usuario_repository.atualizarUsuario(usuario)
 
 
             return f"Usuário ra: {request['ra']} atualizado com sucesso!"

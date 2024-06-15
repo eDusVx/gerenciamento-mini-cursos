@@ -1,26 +1,26 @@
 from ...domain.Curso import Curso
-
+from typing import List
 
 class CursoRepositoryInteface:
-    def save(self, curso: Curso) -> str:
+    def salvarCurso(self, curso: Curso) -> str:
         pass
 
-    def update(self, curso: Curso) -> str:
+    def atualizarCurso(self, curso: Curso) -> str:
         pass
 
-    def find(self, cursoId: str) -> Curso:
+    def buscarPorId(self, cursoId: str) -> Curso:
         pass
 
-    def findAll(self, pagina: int) -> list:
+    def buscarTodos(self, pagina: int) -> List[Curso]:
         pass
 
-    def remove(self, cursoId: str) -> str:
+    def removerPorId(self, cursoId: str) -> str:
         pass
 
-    def findByStatus(self, status: str, pagina: int) -> list:
+    def buscarPorStatus(self, status: str, pagina: int) -> List[Curso]:
         pass
 
-    def findPagesNumber(self,) -> int:
+    def buscarNumeroDePaginas(self,) -> int:
         pass
 
     def inserirAlunoCurso(self, curso: Curso) -> str:

@@ -41,7 +41,7 @@ class RegistrarCursoUsecase:
                 status=request["status"]
             )
 
-            self.cursoRepository.save(curso)
+            self.cursoRepository.salvarCurso(curso)
 
             return curso.toDto()
         except Exception as e:

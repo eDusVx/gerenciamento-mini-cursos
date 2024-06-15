@@ -32,9 +32,9 @@ class RemoverAulaCursoUseCase:
                 raise ValueError("Somente administradores e professores podem cadastrar aulas em cursos")
             
 
-            curso = self.cursoRepository.find(request["cursoId"])
+            curso = self.cursoRepository.buscarPorId(request["cursoId"])
             
-            usuarioCadastro = self.usuarioRepository.find(request["professorId"])
+            usuarioCadastro = self.usuarioRepository.buscarPorId(request["professorId"])
             
             permiteCadastroAula = usuarioCadastro.validarUsuarioCriacaoCurso()
             if permiteCadastroAula == False:

@@ -51,7 +51,7 @@ class Curso:
             self.__dataInclusao = dataInclusao
 
     @nome.setter
-    def nome(self, nome):
+    def nome(self, nome: str):
         if not nome:
             raise ValueError("Nome do curso não informado!")
         self.__nome = nome
@@ -61,7 +61,7 @@ class Curso:
         return self.__descricao
 
     @descricao.setter
-    def descricao(self, descricao):
+    def descricao(self, descricao: str):
         if not descricao:
             raise ValueError("Descrição do curso não informada!")
         self.__descricao = descricao
@@ -71,7 +71,7 @@ class Curso:
         return self.__cargaHoraria
 
     @cargaHoraria.setter
-    def cargaHoraria(self, cargaHoraria):
+    def cargaHoraria(self, cargaHoraria: int):
         if not cargaHoraria:
             raise ValueError("Carga horária não informada!")
         if not isinstance(cargaHoraria, int):
@@ -83,7 +83,7 @@ class Curso:
         return self.__professor
 
     @professor.setter
-    def professor(self, professor):
+    def professor(self, professor: str):
         if not professor or not isinstance(professor, str):
             raise ValueError("Lista de professorId inválida!")
         self.__professor = professor
@@ -93,7 +93,7 @@ class Curso:
         return self.__numeroVagas
 
     @numeroVagas.setter
-    def numeroVagas(self, numeroVagas):
+    def numeroVagas(self, numeroVagas: int):
         if not isinstance(numeroVagas, int) or numeroVagas <= 0:
             raise ValueError("Número de vagas inválido!")
         self.__numeroVagas = numeroVagas
@@ -103,7 +103,7 @@ class Curso:
         return self.__cursoRelacionado
 
     @cursoRelacionado.setter
-    def cursoRelacionado(self, cursoRelacionado):
+    def cursoRelacionado(self, cursoRelacionado: str):
         if not cursoRelacionado:
             raise ValueError("CursoRelacionado não informado!")
         self.__cursoRelacionado = cursoRelacionado
@@ -113,7 +113,7 @@ class Curso:
         return self.__status
 
     @status.setter
-    def status(self, status):
+    def status(self, status: str):
         if not status:
             raise ValueError("Status não informado!")
         self.__status = status
@@ -123,7 +123,7 @@ class Curso:
         return self.__alunos
 
     @alunos.setter
-    def alunos(self, alunos):
+    def alunos(self, alunos: List[str]):
         self.__alunos = alunos
 
     @property
@@ -131,7 +131,7 @@ class Curso:
         return self.__aula
 
     @aula.setter
-    def aula(self, aula):
+    def aula(self, aula: List[Aula]):
         self.__aula = aula
 
     @staticmethod

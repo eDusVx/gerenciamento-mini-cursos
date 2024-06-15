@@ -34,7 +34,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         except Exception as e:
             raise Exception("Erro ao buscar usuário.")
 
-    def save(self, user: Usuario):
+    def salvar(self, user: Usuario):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()

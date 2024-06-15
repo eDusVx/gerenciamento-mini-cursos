@@ -23,7 +23,7 @@ class RemoverCursoUsecase:
             if request["tipoAcesso"] != "ADMIN":
                 raise ValueError("Somente administradores podem remover cursos")
            
-            self.curso_repository.remove(request["id"])
+            self.curso_repository.removerPorId(request["id"])
 
             return f"Curso : {request["id"]} removido com sucesso!"
         except Exception as e:

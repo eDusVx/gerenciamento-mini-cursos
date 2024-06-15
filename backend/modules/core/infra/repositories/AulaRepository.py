@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import List
 
 class AulaRepositoryImpl(AulaRepositoryInterface):
-    def saveList(self, aulas: List[Aula], cursoId: str):
+    def salvarListaAulas(self, aulas: List[Aula], cursoId: str):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()

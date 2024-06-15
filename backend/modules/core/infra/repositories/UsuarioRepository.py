@@ -10,7 +10,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
     def __init__(self, usuario_mapper: UsuarioMapper):
         self.usuario_mapper = usuario_mapper
 
-    def find(self, usuarioId: str):
+    def buscarPorId(self, usuarioId: str):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
@@ -29,7 +29,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao buscar usuário: {e}")
     
-    def remove(self, usuarioId: str):
+    def removerPorId(self, usuarioId: str):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
@@ -41,7 +41,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao deletar usuário: {e}")
 
-    def update(self, usuario: Usuario):
+    def atualizarUsuario(self, usuario: Usuario):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
@@ -81,7 +81,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao atualizar usuário: {e}")
     
-    def findPagesNumber(self, tipoAcesso: str):
+    def buscarNumeroDePaginas(self, tipoAcesso: str):
         try:
             val = None
             connection = Database.obter_conexao()
@@ -107,7 +107,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
             raise Exception(f"Erro ao buscar número de páginas: {e}")
     
 
-    def findAll(self, pagina: int):
+    def buscarTodos(self, pagina: int):
         try:
             tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
             usuarios = []
@@ -128,7 +128,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
             raise Exception(f"Erro ao buscar usuarios: {e}")
 
     
-    def findByTipoAcesso(self, tipoAcesso: str, pagina: int):
+    def buscarPorTipoAcesso(self, tipoAcesso: str, pagina: int):
         try:
             tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
             usuarios = []

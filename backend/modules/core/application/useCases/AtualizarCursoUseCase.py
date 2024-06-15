@@ -27,7 +27,7 @@ class AtualizarCursoUseCase:
             if request["tipoAcesso"] not in ["ADMIN", "PROFESSOR"]:
                 raise ValueError("Somente administradores e professores podem atualizar cursos")
             
-            curso = self.curso_repository.find(request["id"])
+            curso = self.curso_repository.buscarPorId(request["id"])
             if curso is None:
                 raise ValueError("Curso não encontrado")
 
@@ -41,7 +41,7 @@ class AtualizarCursoUseCase:
                 status=request["status"]
             )
 
-            self.curso_repository.update(curso)
+            self.curso_repository.atualizarCurso(curso)
 
             return f"Curso: {request['nome']} atualizado com sucesso!"
         except Exception as e:

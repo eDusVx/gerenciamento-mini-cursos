@@ -18,14 +18,14 @@ class BuscarUsuariosQuery:
     async def execute(self, request: BuscarUsuariosQueryRequest) -> dict:
         try:
             usuarios = []
-            buscarNumeroPaginas = self.usuario_repository.findPagesNumber(request["tipoAcesso"] if request["tipoAcesso"] else None)
+            buscarNumeroPaginas = self.usuario_repository.buscarNumeroDePaginas(request["tipoAcesso"] if request["tipoAcesso"] else None)
             if(request["tipoAcesso"] == None):
-                usuario = self.usuario_repository.findAll(request["pagina"])
+                usuario = self.usuario_repository.buscarTodos(request["pagina"])
                 for i in usuario:
                     usuarios.append(i.toDto())
                 return {"usuarios": usuarios, "numeroPaginas": buscarNumeroPaginas}
             
-            usuario = self.usuario_repository.findByTipoAcesso(request["tipoAcesso"], request["pagina"])
+            usuario = self.usuario_repository.buscarPorTipoAcesso(request["tipoAcesso"], request["pagina"])
 
             for i in usuario:
                 usuarios.append(i.toDto())

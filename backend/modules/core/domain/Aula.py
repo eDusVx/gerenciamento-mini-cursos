@@ -20,7 +20,7 @@ class Aula:
         return self.__nome
 
     @nome.setter
-    def nome(self, nome):
+    def nome(self, nome: str):
         if not nome:
             raise ValueError("Nome da aula não informado!")
         self.__nome = nome
@@ -41,7 +41,7 @@ class Aula:
         return self.__descricao
 
     @descricao.setter
-    def descricao(self, descricao):
+    def descricao(self, descricao: str):
         if not descricao:
             raise ValueError("Descrição da aula não informada!")
         self.__descricao = descricao
@@ -51,7 +51,7 @@ class Aula:
         return self.__conteudo
 
     @conteudo.setter
-    def conteudo(self, conteudo):
+    def conteudo(self, conteudo: str):
         if not conteudo:
             raise ValueError("Conteúdo da aula não informado!")
         self.__conteudo = conteudo
@@ -61,7 +61,7 @@ class Aula:
         return self.__duracao
 
     @duracao.setter
-    def duracao(self, duracao):
+    def duracao(self, duracao: int):
         if not duracao:
             raise ValueError("Duração da aula não informada!")
         self.__duracao = duracao

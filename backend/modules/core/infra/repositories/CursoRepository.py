@@ -11,7 +11,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
     def __init__(self, cursoMapper: CursoMapper):
         self.cursoMapper = cursoMapper
 
-    def save(self, curso: Curso):
+    def salvarCurso(self, curso: Curso):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
@@ -34,7 +34,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao salvar curso: {e}")
 
-    def find(self, cursoId: str):
+    def buscarPorId(self, cursoId: str):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
@@ -64,7 +64,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             raise Exception(f"Erro ao buscar curso: {e}")
 
     
-    def findAll(self, pagina: int):
+    def buscarTodos(self, pagina: int):
         try:
             tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
             cursos = []
@@ -95,7 +95,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             raise Exception(f"Erro ao buscar cursos: {e}")
 
     
-    def findByStatus(self, status: str, pagina: int):
+    def buscarPorStatus(self, status: str, pagina: int):
         try:
             tamanho_pagina = int(os.getenv("TAMANHO_PAGINA"))
             cursos = []
@@ -125,7 +125,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao buscar cursos: {e}")
     
-    def findPagesNumber(self, status: str):
+    def buscarNumeroDePaginas(self, status: str):
         try:
             val = None
             connection = Database.obter_conexao()
@@ -153,7 +153,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
 
     
 
-    def update(self, curso: Curso):
+    def atualizarCurso(self, curso: Curso):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
@@ -190,7 +190,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         except Exception as e:
             raise Exception(f"Erro ao atualizar curso: {e}")
     
-    def remove(self, cursoId: str):
+    def removerPorId(self, cursoId: str):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()

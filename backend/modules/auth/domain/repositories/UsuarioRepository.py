@@ -5,5 +5,5 @@ class UserRepositoryInteface:
     def buscarPorEmail(self, email: str) -> Usuario:
         pass
 
-    def save(self, user: Usuario) -> str:
+    def salvar(self, user: Usuario) -> str:
         pass

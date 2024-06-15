@@ -39,9 +39,9 @@ class CadastarAulaCursoUseCase:
                 raise ValueError("Somente administradores e professores podem cadastrar aulas em cursos")
             
 
-            curso = self.cursoRepository.find(request["cursoId"])
+            curso = self.cursoRepository.buscarPorId(request["cursoId"])
             
-            usuarioCadastro = self.usuarioRepository.find(request["professorId"])
+            usuarioCadastro = self.usuarioRepository.buscarPorId(request["professorId"])
 
             permiteCadastroAula = usuarioCadastro.validarUsuarioCriacaoCurso()
             if permiteCadastroAula == False:
@@ -56,7 +56,7 @@ class CadastarAulaCursoUseCase:
 
             curso.cadastrarAula(aula)
             
-            self.aulasRepository.saveList(curso.aula, curso.id)
+            self.aulasRepository.salvarListaAulas(curso.aula, curso.id)
 
             return curso.toDto()
         except Exception as e:

@@ -23,7 +23,7 @@ class RemoverUsuarioUsecase:
             if request["tipoAcesso"] != "ADMIN":
                 raise ValueError("Somente administradores podem remover usuários")
            
-            self.usuario_repository.remove(request["ra"])
+            self.usuario_repository.removerPorId(request["ra"])
 
             return f"Usuário ra : {request["ra"]} removido com sucesso!"
         except Exception as e:

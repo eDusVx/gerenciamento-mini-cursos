@@ -1,21 +1,21 @@
 from ...domain.Usuario import Usuario
-
+from typing import List
 
 class UserRepositoryInteface:
-    def find(self, userId: str) -> Usuario:
+    def buscarPorId(self, userId: str) -> Usuario:
         pass
 
-    def remove(self, userId) -> str:
+    def removerPorId(self, userId) -> str:
         pass
 
-    def update(self, user: Usuario) -> str:
+    def atualizarUsuario(self, user: Usuario) -> str:
         pass
 
-    def findPagesNumber(self,) -> int:
+    def buscarNumeroDePaginas(self,) -> int:
         pass
 
-    def findAll(self, pagina: int) -> list:
+    def buscarTodos(self, pagina: int) -> List[Usuario]:
         pass
 
-    def findByTipoAcesso(self, tipoAcesso: str, pagina: int) -> list:
+    def buscarPorTipoAcesso(self, tipoAcesso: str, pagina: int) -> List[Usuario]:
         pass

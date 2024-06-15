@@ -40,7 +40,7 @@ class RegistrarUsuarioUseCase:
                 ra=request["ra"]
             )
 
-            self.usuario_repository.save(usuario)
+            self.usuario_repository.salvar(usuario)
 
             return f"Usuário {request['nome']} com RA {request['ra']} registrado com sucesso!"
         except Exception as e:

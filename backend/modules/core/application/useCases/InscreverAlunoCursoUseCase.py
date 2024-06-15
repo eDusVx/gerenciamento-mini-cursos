@@ -27,8 +27,8 @@ class InscreverAlunoCursoUseCase:
         try:
             if request["tipoAcesso"] not in ["ADMIN", "PROFESSOR"]:
                 raise ValueError("Somente administradores e professores podem inscrever alunos em cursos")
-            curso = self.cursoRepository.find(request["cursoId"])
-            aluno = self.usuarioRepository.find(request["ra"])
+            curso = self.cursoRepository.buscarPorId(request["cursoId"])
+            aluno = self.usuarioRepository.buscarPorId(request["ra"])
 
             curso.inscreverAluno(aluno)
             
