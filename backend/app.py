@@ -20,7 +20,7 @@ def create_app():
     return app
 
 
-def listar_rotas(app):
+def listar_rotas(app: Flask):
     print(f"{Fore.LIGHTCYAN_EX}Rotas registradas:")
     for rule in app.url_map.iter_rules():
         for method in rule.methods:
