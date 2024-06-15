@@ -1,8 +1,9 @@
 import uuid
 from typing import Optional
+from datetime import datetime
 
 class Aula:
-    def __init__(self, nome: str, descricao: str, conteudo: str, duracao: int, id: Optional[uuid.UUID] = None):
+    def __init__(self, nome: str, descricao: str, conteudo: str, duracao: int, id: Optional[uuid.UUID] = None, dataInclusao: Optional[datetime] = None,):
         if id is None:
             self.id = uuid.uuid4()
         else:
@@ -11,6 +12,8 @@ class Aula:
         self.descricao = descricao
         self.conteudo = conteudo
         self.duracao = duracao
+        self.dataInclusao = dataInclusao
+        
 
     @property
     def nome(self):
@@ -21,6 +24,17 @@ class Aula:
         if not nome:
             raise ValueError("Nome da aula não informado!")
         self.__nome = nome
+    
+    @property
+    def dataInclusao(self):
+        return self.__dataInclusao
+        
+    @dataInclusao.setter
+    def dataInclusao(self, dataInclusao: Optional[datetime]):
+        if dataInclusao is None:
+            self.__dataInclusao = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        else:
+            self.__dataInclusao = dataInclusao
 
     @property
     def descricao(self):
@@ -62,14 +76,16 @@ class Aula:
         nome: str,
         descricao: str,
         conteudo: str,
-        duracao: int
+        duracao: int,
+        dataInclusao: datetime
     ):
         return Aula(
             nome,
             descricao,
             conteudo,
             duracao,
-            id
+            id,
+            dataInclusao=dataInclusao
         )
 
     def toDto(self):
@@ -78,6 +94,7 @@ class Aula:
             "nome": self.nome,
             "descricao": self.descricao,
             "conteudo": self.conteudo,
-            "duracao": self.duracao 
+            "duracao": self.duracao,
+            "dataInclsuao": str(self.dataInclusao)
         }
     

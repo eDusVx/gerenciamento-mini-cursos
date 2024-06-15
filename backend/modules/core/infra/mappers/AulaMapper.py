@@ -1,5 +1,5 @@
 from ...domain.Aula import Aula
-import uuid
+from datetime import datetime
 
 
 class AulaMapper:
@@ -9,7 +9,8 @@ class AulaMapper:
             descricao = aulaModel["descricao_aula"],
             conteudo = aulaModel["conteudo_aula"],
             duracao = aulaModel["duracao_aula"],
-            id = aulaModel["id"]
+            id = aulaModel["id"],
+            dataInclusao=datetime.strptime(str(aulaModel["data_inclusao"]), '%Y-%m-%d %H:%M:%S.%f')
         )
         return aula
 

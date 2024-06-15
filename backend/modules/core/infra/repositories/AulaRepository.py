@@ -18,7 +18,7 @@ class AulaRepositoryImpl(AulaRepositoryInterface):
                     aula.descricao,
                     aula.conteudo,
                     str(cursoId),
-                    datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
+                    aula.dataInclusao,
                     datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
                     aula.duracao
                 )

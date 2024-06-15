@@ -1,4 +1,5 @@
 from ...domain.Usuario import Usuario, TipoAcesso, Sexo
+from datetime import datetime
 
 
 class NenhumUsuarioCadastradoException(Exception):
@@ -15,6 +16,7 @@ class UsuarioMapper:
             TipoAcesso[usuarioModel["tipoAcesso"]],
             usuarioModel["dataNascimento"],
             Sexo[usuarioModel["sexo"]],
-            usuarioModel["ra"]
+            usuarioModel["ra"],
+            dataInclusao=datetime.strptime(str(usuarioModel["data_inclusao"]), '%Y-%m-%d %H:%M:%S.%f')
         )
         return usuario

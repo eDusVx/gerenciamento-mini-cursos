@@ -1,6 +1,7 @@
 from ...domain.Curso import Curso
 from .AulaMapper import AulaMapper
 import uuid
+from datetime import datetime
 
 class CursoMapper:
     def __init__(self, aulaMapper: AulaMapper):
@@ -20,7 +21,8 @@ class CursoMapper:
             cursoRelacionado=cursoModel["curso_relacionado"],
             status=cursoModel["status_curso"],
             alunos=cursoModel["alunos"],
-            aula=aulas
+            aula=aulas,
+            dataInclusao = datetime.strptime(str(cursoModel["data_inclusao"]), '%Y-%m-%d %H:%M:%S.%f')
         )
         return curso
 

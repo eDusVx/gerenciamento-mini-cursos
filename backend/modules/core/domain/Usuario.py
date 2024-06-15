@@ -149,8 +149,8 @@ class Usuario:
             self.sexo = sexo
 
     @staticmethod
-    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str):
-        return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra)
+    def create(cpf: str, nome: str, email: str, senha: str, tipoAcesso: TipoAcesso, dataNascimento: datetime, sexo: Sexo, ra: str, dataInclusao:datetime):
+        return Usuario(cpf, nome, email, senha, tipoAcesso, dataNascimento, sexo, ra, dataInclusao=dataInclusao)
 
     def toDto(self):
         return {
@@ -161,7 +161,7 @@ class Usuario:
             "tipoAcesso": self.tipoAcesso.name,
             "sexo": self.sexo.name,
             "dataNascimento": self.dataNascimento,
-            "dataInclusao": self.dataInclusao,
+            "dataInclusao": str(self.dataInclusao),
         }
     
     def validarUsuarioCriacaoCurso(self) -> bool:

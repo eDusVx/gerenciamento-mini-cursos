@@ -161,7 +161,7 @@ class Curso:
             "descricao": self.descricao,
             "cargaHoraria": self.cargaHoraria,
             "professor": self.professor,
-            "dataInclusao": self.dataInclusao,
+            "dataInclusao": str(self.dataInclusao),
             "numeroVagas": self.numeroVagas,
             "alunos": self.alunos,
             "cursoRelacionado": self.cursoRelacionado,
@@ -205,7 +205,8 @@ class Curso:
         cursoRelacionado: str,
         status: str,
         alunos: Optional[List[str]],
-        aula: Optional[List[Aula]]
+        aula: Optional[List[Aula]],
+        dataInclusao: datetime
     ):
         return Curso(
             nome,
@@ -217,7 +218,8 @@ class Curso:
             status,
             alunos,
             aula,
-            id
+            id,
+            dataInclusao=dataInclusao
         )
     
     def inscreverAluno(self, aluno: Usuario):

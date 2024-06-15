@@ -40,7 +40,7 @@ class CadastarAulaCursoUseCase:
             
 
             curso = self.cursoRepository.find(request["cursoId"])
-
+            
             usuarioCadastro = self.usuarioRepository.find(request["professorId"])
 
             permiteCadastroAula = usuarioCadastro.validarUsuarioCriacaoCurso()
