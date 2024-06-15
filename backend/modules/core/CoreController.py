@@ -17,6 +17,7 @@ class CoreController:
         self.inscreverAlunoCursoUseCase = UseCaseFactory.createInscreverAlunoCursoUseCase()
         self.removerAlunoCursoUseCase = UseCaseFactory.createRemoverAlunoCursoUseCase()
         self.cadastrarAulaCursoUseCase = UseCaseFactory.createCadastrarAulaCursoUseCase()
+        self.removerAulaCursoUseCase = UseCaseFactory.createRemoverAulaCursoUseCase()
 
     @jwt_required()
     async def registrarCurso(self):
@@ -142,6 +143,18 @@ class CoreController:
             return jsonify({"error": str(e)}), 400
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+    
+    @jwt_required()
+    async def removerAulaCurso(self):
+        try:
+            request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
+            response = await self.removerAulaCursoUseCase.execute(request.json)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     @jwt_required()
     async def hello_world(self):
@@ -209,4 +222,9 @@ coreController.add_url_rule(
     "/core/cadastrar-aula-curso",
     view_func=CoreController().cadastrarAulaCurso,
     methods=["POST"],
+)
+coreController.add_url_rule(
+    "/core/remover-aula-curso",
+    view_func=CoreController().removerAulaCurso,
+    methods=["DELETE"],
 )

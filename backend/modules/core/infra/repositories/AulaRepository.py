@@ -28,3 +28,16 @@ class AulaRepositoryImpl(AulaRepositoryInterface):
             return f"aulas salvas com sucesso!"
         except Exception as e:
             raise Exception(f"Erro ao salvar aulas: {e}")
+    
+    def removerAula(self, cursoId: str, aulaRemovida: str):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = """DELETE FROM aulas WHERE id_curso = %s and id = %s"""
+            val = (str(cursoId), aulaRemovida,)
+            cursor.execute(sql, val)
+            connection.commit()
+            cursor.close()
+            return f"Aula removida com sucesso!"
+        except Exception as e:
+            raise Exception(f"Erro ao remover aula: {e}")

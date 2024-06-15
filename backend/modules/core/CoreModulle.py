@@ -17,6 +17,7 @@ from .infra.mappers.CursoMapper import CursoMapper
 from .infra.mappers.AulaMapper import AulaMapper
 from .application.useCases.RemoverAlunoCursoUseCase import RemoverAlunoCursoUseCase
 from .application.useCases.CadastrarAulaCursoUseCase import CadastarAulaCursoUseCase
+from .application.useCases.RemoverAulaCursoUseCase import RemoverAulaCursoUseCase
 
 
 class DependencyContainer:
@@ -79,5 +80,11 @@ class UseCaseFactory:
         curso_repository = DependencyContainer.provide_curso_repository()
         aula_repository = DependencyContainer.provide_aula_repository()
         return CadastarAulaCursoUseCase(curso_repository, user_repository, aula_repository)
+
+    def createRemoverAulaCursoUseCase() -> RemoverAulaCursoUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        curso_repository = DependencyContainer.provide_curso_repository()
+        aula_repository = DependencyContainer.provide_aula_repository()
+        return RemoverAulaCursoUseCase(curso_repository, user_repository, aula_repository)
     
 

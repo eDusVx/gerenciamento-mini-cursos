@@ -241,3 +241,17 @@ class Curso:
         self.aula.append(aula)
         return f"Aula {aula.nome} cadastrada com sucesso!"
 
+    def removerAula(self, aulaId: str) -> str:
+        aulaRemovida = None
+        if aulaId is None:
+            raise ValueError("Nenhuma aula informada!")
+        
+        for i, aula in enumerate(self.aula):
+            print(aula.id)
+            if aula.id == aulaId:
+                aulaRemovida = aula.id
+                del self.aula[i]
+                return aulaRemovida
+
+        return None
+
