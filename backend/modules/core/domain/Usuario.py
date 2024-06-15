@@ -114,7 +114,7 @@ class Usuario:
         self.__cpf = cpf
     
     @sexo.setter
-    def sexo(self, sexo: str):
+    def sexo(self, sexo: Sexo):
         if not sexo:
             raise ValueError("Sexo não informado!")
         if not isinstance(sexo, Sexo):

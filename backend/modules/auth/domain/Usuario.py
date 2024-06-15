@@ -72,7 +72,7 @@ class Usuario:
             self.__dataInclusao = dataInclusao
 
     @nome.setter
-    def nome(self, nome):
+    def nome(self, nome: str):
         if not nome:
             raise ValueError("Nome não informado!")
         if not isinstance(nome, str):
@@ -80,7 +80,7 @@ class Usuario:
         self.__nome = nome
 
     @email.setter
-    def email(self, email):
+    def email(self, email: str):
         if not email:
             raise ValueError("Email não informado!")
         if not isinstance(email, str):
@@ -92,7 +92,7 @@ class Usuario:
         self.__email = email
 
     @senha.setter
-    def senha(self, senha):
+    def senha(self, senha: str):
         if not senha:
             raise ValueError("Senha não informada!")
         if len(senha) < 6:
@@ -100,7 +100,7 @@ class Usuario:
         self.__senha = senha
 
     @tipoAcesso.setter
-    def tipoAcesso(self, tipoAcesso):
+    def tipoAcesso(self, tipoAcesso: TipoAcesso):
         if not tipoAcesso:
             raise ValueError("Tipoacesso não informado!")
         if not isinstance(tipoAcesso, TipoAcesso):
@@ -108,7 +108,7 @@ class Usuario:
         self.__tipoAcesso = tipoAcesso
     
     @sexo.setter
-    def sexo(self, sexo):
+    def sexo(self, sexo: Sexo):
         if not sexo:
             raise ValueError("Sexo não informado!")
         if not isinstance(sexo, Sexo):
@@ -116,7 +116,7 @@ class Usuario:
         self.__sexo = sexo
 
     @dataNascimento.setter
-    def dataNascimento(self, dataNascimento):
+    def dataNascimento(self, dataNascimento: datetime):
         if not dataNascimento:
             raise ValueError("Data de nascimento não informada!")
         if not isinstance(dataNascimento, date):
@@ -124,7 +124,7 @@ class Usuario:
         self.__dataNascimento = dataNascimento
     
     @cpf.setter
-    def cpf(self, cpf):
+    def cpf(self, cpf: str):
         if not cpf:
             raise ValueError("CPF não informado!")
         if not isinstance(cpf, str) or not cpf.isdigit() or len(cpf) != 11:
@@ -133,7 +133,7 @@ class Usuario:
         self.__cpf = cpf
     
     @ra.setter
-    def ra(self, ra):
+    def ra(self, ra: str):
         if not ra:
             raise ValueError("RA não informado!")
         
