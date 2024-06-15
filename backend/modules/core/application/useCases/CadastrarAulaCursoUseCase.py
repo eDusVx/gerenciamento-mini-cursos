@@ -38,9 +38,9 @@ class CadastarAulaCursoUseCase:
             if request["tipoAcesso"] not in ["ADMIN", "PROFESSOR"]:
                 raise ValueError("Somente administradores e professores podem cadastrar aulas em cursos")
             
-            print("ANTES")
+
             curso = self.cursoRepository.find(request["cursoId"])
-            print("DEPOIS")
+
             usuarioCadastro = self.usuarioRepository.find(request["professorId"])
 
             permiteCadastroAula = usuarioCadastro.validarUsuarioCriacaoCurso()
