@@ -224,3 +224,18 @@ class Curso:
         if aluno.ra in self.alunos:
             raise ValueError(f"O Aluno de ra {aluno.ra} já está inscrito no curso.")
         self.alunos.append(aluno.ra)
+
+    def removerAluno(self, aluno: Usuario) -> str:
+        ra = aluno.ra        
+        if ra not in self.alunos:
+            raise ValueError(f"O aluno de ra {ra} não está inscrito no curso.")
+        
+        self.alunos.remove(ra)
+        return ra
+    
+    def cadastrarAula(self, aula: Aula) -> str:
+        if aula is None:
+            raise ValueError("Nenhuma aula informada!")
+        self.aula.append(aula)
+        return f"Aula {aula.nome} cadastrada com sucesso!"
+

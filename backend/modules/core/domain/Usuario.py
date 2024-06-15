@@ -163,3 +163,8 @@ class Usuario:
             "dataNascimento": self.dataNascimento,
             "dataInclusao": self.dataInclusao,
         }
+    
+    def validarUsuarioCriacaoCurso(self) -> bool:
+        if self.tipoAcesso.name != "PROFESSOR" and self.tipoAcesso.name != "ADMIN":
+            return False
+        return True

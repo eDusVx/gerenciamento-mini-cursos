@@ -1,7 +1,9 @@
 from .infra.repositories.UsuarioRepository import UserRepositoryImpl
 from .domain.repositories.UsuarioRepository import UserRepositoryInteface
 from .infra.repositories.CursoRepository import CursoRepositoryImpl
+from .infra.repositories.AulaRepository import AulaRepositoryImpl
 from .domain.repositories.CursoRepository import CursoRepositoryInteface
+from .domain.repositories.AulaRepository import AulaRepositoryInterface
 from .application.useCases.RegistrarCursoUseCase import RegistrarCursoUsecase
 from .application.useCases.RemoverUsuarioUseCase import RemoverUsuarioUsecase
 from .application.useCases.AtualizarUsuarioUseCase import AtualizarUsuarioUseCase
@@ -13,6 +15,8 @@ from .application.useCases.InscreverAlunoCursoUseCase import InscreverAlunoCurso
 from .infra.mappers.UsuarioMapper import UsuarioMapper
 from .infra.mappers.CursoMapper import CursoMapper
 from .infra.mappers.AulaMapper import AulaMapper
+from .application.useCases.RemoverAlunoCursoUseCase import RemoverAlunoCursoUseCase
+from .application.useCases.CadastrarAulaCursoUseCase import CadastarAulaCursoUseCase
 
 
 class DependencyContainer:
@@ -20,6 +24,9 @@ class DependencyContainer:
     def provide_user_repository() -> UserRepositoryInteface:
         usuarioMapper = UsuarioMapper()
         return UserRepositoryImpl(usuarioMapper)
+    
+    def provide_aula_repository() -> AulaRepositoryInterface:
+        return AulaRepositoryImpl()
     
     def provide_curso_repository() -> CursoRepositoryInteface:
         aulaMapper = AulaMapper()
@@ -61,5 +68,16 @@ class UseCaseFactory:
         user_repository = DependencyContainer.provide_user_repository()
         curso_repository = DependencyContainer.provide_curso_repository()
         return InscreverAlunoCursoUseCase(curso_repository, user_repository)
+    
+    def createRemoverAlunoCursoUseCase() -> RemoverAlunoCursoUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        curso_repository = DependencyContainer.provide_curso_repository()
+        return RemoverAlunoCursoUseCase(curso_repository, user_repository)
+    
+    def createCadastrarAulaCursoUseCase() -> CadastarAulaCursoUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        curso_repository = DependencyContainer.provide_curso_repository()
+        aula_repository = DependencyContainer.provide_aula_repository()
+        return CadastarAulaCursoUseCase(curso_repository, user_repository, aula_repository)
     
 

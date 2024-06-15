@@ -214,3 +214,15 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
             connection.commit()
         except Exception as e:
             raise Exception(f"Erro ao inserir aluno no curso: {e}")
+    
+    def removerAlunoCurso(self, curso: Curso, alunoRemovido: str):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = "DELETE FROM usuarios_curso WHERE curso_id = %s and usuario_ra = %s"
+            val = (str(curso.id), alunoRemovido,)
+            cursor.execute(sql, (val))
+            
+            return f"Aluno de ra {alunoRemovido} removido do curso {curso.nome}"
+        except Exception as e:
+            raise Exception(f"Erro ao remover alunos do curso: {e}")

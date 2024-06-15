@@ -15,6 +15,8 @@ class CoreController:
         self.buscarCursosQuery = UseCaseFactory.createBuscarCursosQuery()
         self.buscarUsuariosQuery = UseCaseFactory.createBuscarUsuariosQuery()
         self.inscreverAlunoCursoUseCase = UseCaseFactory.createInscreverAlunoCursoUseCase()
+        self.removerAlunoCursoUseCase = UseCaseFactory.createRemoverAlunoCursoUseCase()
+        self.cadastrarAulaCursoUseCase = UseCaseFactory.createCadastrarAulaCursoUseCase()
 
     @jwt_required()
     async def registrarCurso(self):
@@ -33,6 +35,19 @@ class CoreController:
             request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
 
             response = await self.removerUsuarioUseCase.execute(request.json)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    
+    @jwt_required()
+    async def cadastrarAulaCurso(self):
+        try:
+            request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
+
+            response = await self.cadastrarAulaCursoUseCase.execute(request.json)
 
             return jsonify({"data": response}), 200
         except ValueError as e:
@@ -115,6 +130,18 @@ class CoreController:
             return jsonify({"error": str(e)}), 400
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+    
+    @jwt_required()
+    async def removerAlunoCurso(self):
+        try:
+            request.json['tipoAcesso'] = get_jwt()["tipoAcesso"]
+            response = await self.removerAlunoCursoUseCase.execute(request.json)
+
+            return jsonify({"data": response}), 200
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     @jwt_required()
     async def hello_world(self):
@@ -171,5 +198,15 @@ coreController.add_url_rule(
 coreController.add_url_rule(
     "/core/inscrever-aluno-curso",
     view_func=CoreController().inscreverAlunoCurso,
+    methods=["POST"],
+)
+coreController.add_url_rule(
+    "/core/remover-aluno-curso",
+    view_func=CoreController().removerAlunoCurso,
+    methods=["DELETE"],
+)
+coreController.add_url_rule(
+    "/core/cadastrar-aula-curso",
+    view_func=CoreController().cadastrarAulaCurso,
     methods=["POST"],
 )

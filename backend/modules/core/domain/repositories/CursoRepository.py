@@ -25,3 +25,6 @@ class CursoRepositoryInteface:
 
     def inserirAlunoCurso(self, curso: Curso) -> str:
         pass
+
+    def removerAlunoCurso(self, curso: Curso, alunoRemovido: str):
+        pass
