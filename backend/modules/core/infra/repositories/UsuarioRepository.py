@@ -14,7 +14,7 @@ class UserRepositoryImpl(UserRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor(dictionary=True)
-            sql = "SELECT*FROM usuarios WHERE ra = %s"
+            sql = "SELECT * FROM usuarios WHERE ra = %s"
             val = (usuarioId,)
             cursor.execute(sql, val)
             result = cursor.fetchone()
