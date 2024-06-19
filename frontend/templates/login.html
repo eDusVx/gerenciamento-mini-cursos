@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCCursos - Sistema de Cursos</title>
+    <link rel="stylesheet" href="static/inicial.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="static/images/logobcc.jpg" alt="BCCursos">
+        </div>
+        <div class="login-form">
+            <input type="text" placeholder="RA" id="ra">
+            <input type="password" placeholder="Senha" id="senha">
+            <button onclick="entrar()">Entrar</button>
+            <button onclick="registrar()">Registrar aluno</button>
+        </div>
+    </header>
+    <div class="forgot-password">
+        <a href="esqueci_senha.html">Esqueci minha senha</a>
+    </div>
+    <div class="gif-container">
+        <img src="static/images/bccursos.gif" alt="BCCursos GIF" width="470" height="470">
+    </div>
+    <script>
+        const API_URL = '{{ api_url }}';
+
+        async function entrar() {
+            var ra = document.getElementById('ra').value;
+            var senha = document.getElementById('senha').value;
+
+            console.log(ra, senha);
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: ra, senha: senha })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Login bem-sucedido! Redirecionando para a página correta...');
+                } else {
+                    alert('RA ou senha incorretos.');
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                alert('Ocorreu um erro ao tentar fazer login.');
+            }
+        }
+
+        function registrar() {
+            window.location.href = 'registro.html';
+        }
+    </script>
+</body>
+</html>

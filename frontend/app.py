@@ -16,14 +16,15 @@ app.config['API_URL'] = os.getenv('API_URL')
 # Middleware para adicionar o token de autenticação às requisições
 app.before_request(authMiddleware)
 
-# Register blueprints
+# Blueprints das rotas dos services
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(course_bp, url_prefix='/course')
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+@app.route('/login')
+def login():
+    api_url = app.config['API_URL']
+    return render_template('login.html', api_url=api_url)
 
 if __name__ == '__main__':
     app.run(debug=True)
