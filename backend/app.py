@@ -6,7 +6,7 @@ from dbconfig import Database
 import os
 from colorama import Fore
 from flask_jwt_extended import JWTManager
-
+from flask_cors import CORS
 
 def create_app():
     load_dotenv()
@@ -17,6 +17,11 @@ def create_app():
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET")
     JWTManager(app)
     Database.conectar_mysql()
+
+    # Configurar CORS para aceitar requisições localhost:4200
+    CORS(app, origins=["http://localhost:4200"])
+
+
     return app
 
 
@@ -31,4 +36,6 @@ def listar_rotas(app: Flask):
 
 
 app = create_app()
-listar_rotas(app)
+if app:
+    listar_rotas(app)
+    app.run(debug=True)
