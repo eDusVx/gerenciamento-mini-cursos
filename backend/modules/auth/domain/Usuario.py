@@ -87,8 +87,6 @@ class Usuario:
             raise ValueError("Email deve ser uma string!")
         if "@" not in email or "." not in email:
             raise ValueError("Email inválido!")
-        if not email.endswith("@sempreceub.com"):
-            raise ValueError("O email institucional deve terminar com @sempreceub.com")
         self.__email = email
 
     @senha.setter

@@ -1,11 +1,11 @@
 from flask import Flask, render_template
+from flask_cors import CORS
 from dotenv import load_dotenv
 import os
-from middlewares.authMiddleware import authMiddleware
 
-from blueprints.auth.routes import auth_bp
-from blueprints.user.routes import user_bp
-from blueprints.course.routes import course_bp
+from middlewares.unauthorizedMiddleware import unauthorizedMiddleware
+
+from flask_bootstrap import Bootstrap
 
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -13,18 +13,34 @@ load_dotenv()
 app = Flask(__name__)
 app.config['API_URL'] = os.getenv('API_URL')
 
-# Middleware para adicionar o token de autenticação às requisições
-app.before_request(authMiddleware)
+# Middlewares
+app.after_request(unauthorizedMiddleware)
 
-# Blueprints das rotas dos services
-app.register_blueprint(auth_bp, url_prefix='/auth')
-app.register_blueprint(user_bp, url_prefix='/user')
-app.register_blueprint(course_bp, url_prefix='/course')
+Bootstrap(app)
 
-@app.route('/login')
+@app.route('/')
 def login():
     api_url = app.config['API_URL']
     return render_template('login.html', api_url=api_url)
 
+@app.route('/home')
+def home():
+    return render_template('home.html', jwt_secret=os.getenv('JWT_SECRET'))
+
+@app.route('/cursos')
+def cursos():
+    api_url = app.config['API_URL']
+    return render_template('cursos.html', api_url=api_url, jwt_secret=os.getenv('JWT_SECRET'))
+
+@app.route('/adicionar_curso')
+def adicionar_curso():
+    api_url = app.config['API_URL']
+    return render_template('adicionar_curso.html', api_url=api_url, jwt_secret=os.getenv('JWT_SECRET'))
+
+@app.route('/cursos/editar/<string:id>')
+def editar_curso(id):
+    api_url = app.config['API_URL']
+    return render_template('editar_curso.html', api_url=api_url, id=id, jwt_secret=os.getenv('JWT_SECRET'))
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4200)

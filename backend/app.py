@@ -18,9 +18,8 @@ def create_app():
     JWTManager(app)
     Database.conectar_mysql()
 
-    # Configurar CORS para aceitar requisições localhost:4200
-    CORS(app, origins=["http://localhost:4200"])
-
+    # Configurar CORS para aceitar requisições
+    CORS(app, origins="*")
 
     return app
 
@@ -36,6 +35,6 @@ def listar_rotas(app: Flask):
 
 
 app = create_app()
+listar_rotas(app)
 if app:
-    listar_rotas(app)
     app.run(debug=True)

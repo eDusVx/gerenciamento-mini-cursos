@@ -31,6 +31,6 @@ class EfetuarLoginUsuarioUsecase:
                 )
                 return token
             else:
-                raise Exception("Senha incorreta")
+                raise Exception("Usuário ou senha inválidos")
         except Exception as e:
             raise e

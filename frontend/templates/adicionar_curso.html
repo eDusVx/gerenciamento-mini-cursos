@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Adicionar Curso{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Adicionar Curso</h1>
+    <form id="adicionar-curso-form">
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" required>
+        </div>
+        <div class="form-group">
+            <label for="cargaHoraria">Carga Horária</label>
+            <input type="number" class="form-control" id="cargaHoraria" name="cargaHoraria" required>
+        </div>
+        <div class="form-group">
+            <label for="professor">Professor</label>
+            <input type="text" class="form-control" id="professor" name="professor" required>
+        </div>
+        <div class="form-group">
+            <label for="numeroVagas">Número de Vagas</label>
+            <input type="number" class="form-control" id="numeroVagas" name="numeroVagas" required>
+        </div>
+        <div class="form-group">
+            <label for="cursoRelacionado">Curso Relacionado</label>
+            <input type="text" class="form-control" id="cursoRelacionado" name="cursoRelacionado" required>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input type="text" class="form-control" id="status" name="status" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{{ url_for('cursos') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<script>
+    const API_URL = "{{ api_url }}";
+    const token = localStorage.getItem('bcc_token');
+
+    document.getElementById('adicionar-curso-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const cursoData = {
+            nome: document.getElementById('nome').value,
+            descricao: document.getElementById('descricao').value,
+            cargaHoraria: parseInt(document.getElementById('cargaHoraria').value),
+            professor: document.getElementById('professor').value,
+            numeroVagas: parseInt(document.getElementById('numeroVagas').value),
+            cursoRelacionado: document.getElementById('cursoRelacionado').value,
+            status: document.getElementById('status').value
+        };
+
+        fetch(`${API_URL}/core/registrar-curso`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(cursoData)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Curso adicionado com sucesso!');
+                window.location.href = '/cursos';
+            } else {
+                alert('Erro ao adicionar curso.');
+            }
+        });
+    });
+</script>
+{% endblock %}

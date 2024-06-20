@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Cursos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Cursos</h1>
+    <button class="btn btn-primary mb-3" onclick="window.location.href='adicionar_curso'">Adicionar Novo Curso</button>
+    <table class="table table-striped" id="cursos-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Carga Horária</th>
+                <th>Professor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Conteúdo será inserido por JS -->
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination" id="pagination">
+            <!-- Paginação será inserido por JS -->
+        </ul>
+    </nav>
+
+    <script>
+        const API_URL = "{{ api_url }}";
+        const token = localStorage.getItem('bcc_token');
+
+        let currentPage = 0;
+
+        async function fetchCursos(page) {
+            if (page === currentPage) return;
+
+            currentPage = page;
+            try {
+                const response = await fetch(`${API_URL}/core/buscar-cursos?pagina=${page}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cursos');
+                }
+                const data = await response.json();
+
+                renderCursos(data.data.cursos);
+                renderPagination(page, data.data.numeroPaginas);
+            } catch (error) {
+                console.error('Error fetching cursos:', error);
+            }
+        }
+        
+        function renderCursos(cursos) {
+            const tbody = document.querySelector('#cursos-table tbody');
+            tbody.innerHTML = '';
+            cursos.forEach(curso => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${curso.nome}</td>
+                    <td>${curso.descricao}</td>
+                    <td>${curso.cargaHoraria}</td>
+                    <td>${curso.professor}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="window.location.href='/cursos/editar/${curso.id}'">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="showDeleteModal('${curso.id}')">Excluir</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        
+        function renderPagination(currentPage, totalPages) {
+            const paginationEl = document.getElementById('pagination');
+            paginationEl.innerHTML = '';
+    
+            if (currentPage > 1) {
+                const prevLi = document.createElement('li');
+                prevLi.className = 'page-item';
+                prevLi.innerHTML = `<a class="page-link" href="#" onclick="fetchCursos(${currentPage - 1})">Anterior</a>`;
+                paginationEl.appendChild(prevLi);
+            }
+    
+            for (let page = 1; page <= totalPages; page++) {
+                const pageLi = document.createElement('li');
+                pageLi.className = `page-item ${page === currentPage ? 'active' : ''}`;
+                pageLi.innerHTML = `<a class="page-link" href="#" onclick="fetchCursos(${page})">${page}</a>`;
+                paginationEl.appendChild(pageLi);
+            }
+    
+            if (currentPage < totalPages) {
+                const nextLi = document.createElement('li');
+                nextLi.className = 'page-item';
+                nextLi.innerHTML = `<a class="page-link" href="#" onclick="fetchCursos(${currentPage + 1})">Próximo</a>`;
+                paginationEl.appendChild(nextLi);
+            }
+        }
+    
+        window.showDeleteModal = function(cursoId) {
+            const confirmDeleteButton = document.getElementById('confirmDelete');
+            confirmDeleteButton.setAttribute('data-id', cursoId);
+            $('#deleteModal').modal('show');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchCursos(1);
+
+            document.getElementById('confirmDelete').addEventListener('click', async function() {
+                const cursoId = this.getAttribute('data-id');
+                try {
+                    const response = await fetch(`${API_URL}/core/remover-curso`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: cursoId })
+                    });
+                    if (response.ok) {
+                        $('#deleteModal').modal('hide');
+                        alert('Curso excluído com sucesso!', 'success');
+                        setTimeout(() => fetchCursos(1), 500);
+                    } else {
+                        alert('Erro ao excluir curso.');
+                    }
+                } catch (error) {
+                    console.error('Error deleting curso:', error);
+                }
+            });
+        });
+        </script>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir este curso?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmDelete">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
