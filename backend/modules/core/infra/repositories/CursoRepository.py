@@ -15,7 +15,7 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
         try:
             connection = Database.obter_conexao()
             cursor = connection.cursor()
-            sql = "INSERT INTO curso (id, nome_curso, descricao, duracao, curso_relacionado, status_curso, quantidade_max_alunos, data_inclusao, data_modificacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO curso (id, nome_curso, descricao, duracao, curso_relacionado, status_curso, quantidade_max_alunos, data_inclusao, data_modificacao, professor_ra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             val = (
                 str(curso.id),
                 curso.nome,
@@ -25,7 +25,8 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
                 curso.status,
                 curso.numeroVagas,
                 curso.dataInclusao,
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+                datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
+                curso.professor,
             )
             cursor.execute(sql, val)
             connection.commit()
@@ -60,6 +61,23 @@ class CursoRepositoryImpl(CursoRepositoryInteface):
                 return curso
             else:
                 raise ValueError(f"Nenhum Curso cadastrado para o id {cursoId}")
+        except Exception as e:
+            raise Exception(f"Erro ao buscar curso: {e}")
+    
+    def buscarPorNome(self, nome: str):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor(dictionary=True)
+            
+            sql_curso = "SELECT * FROM curso WHERE nome_curso = %s"
+            val_curso = (nome,)
+            cursor.execute(sql_curso, val_curso)
+            result_curso = cursor.fetchone()
+            
+            if result_curso:
+                return True
+            else:
+                return False
         except Exception as e:
             raise Exception(f"Erro ao buscar curso: {e}")
 

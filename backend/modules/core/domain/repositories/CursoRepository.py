@@ -28,3 +28,6 @@ class CursoRepositoryInteface:
 
     def removerAlunoCurso(self, curso: Curso, alunoRemovido: str):
         pass
+
+    def buscarPorNome(self, nome:str) -> bool:
+        pass

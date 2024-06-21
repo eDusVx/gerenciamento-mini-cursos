@@ -25,6 +25,6 @@ class RemoverCursoUsecase:
            
             self.curso_repository.removerPorId(request["id"])
 
-            return f"Curso : {request["id"]} removido com sucesso!"
+            return f"Curso : {request['id']} removido com sucesso!"
         except Exception as e:
             raise e

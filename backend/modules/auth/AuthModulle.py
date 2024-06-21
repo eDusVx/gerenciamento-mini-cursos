@@ -5,6 +5,7 @@ from .infra.mappers.UsuarioMapper import UsuarioMapper
 from .domain.services.AuthService import AuthService
 from .application.services.AuthService import AuthServiceInterface
 from .application.useCases.RegistrarUsuarioUseCase import RegistrarUsuarioUseCase
+from .application.useCases.RecuperarSeanhaUseCase import RecuperarSenhaUseCase
 
 
 class DependencyContainer:
@@ -27,3 +28,7 @@ class UseCaseFactory:
     def create_registrar_usuario_use_case() -> RegistrarUsuarioUseCase:
         user_repository = DependencyContainer.provide_user_repository()
         return RegistrarUsuarioUseCase(user_repository)
+
+    def create_recuperar_senha_use_case() -> RecuperarSenhaUseCase:
+        user_repository = DependencyContainer.provide_user_repository()
+        return RecuperarSenhaUseCase(user_repository)

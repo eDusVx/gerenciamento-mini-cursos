@@ -46,3 +46,16 @@ class UserRepositoryImpl(UserRepositoryInteface):
             return f"Usuario {user.nome} salvo com sucesso!"
         except Exception as e:
             raise Exception(f"Erro ao salvar usuário: {e}")
+        
+    def salvarNovaSenha(self, user: Usuario):
+        try:
+            connection = Database.obter_conexao()
+            cursor = connection.cursor()
+            sql = "UPDATE usuarios SET senha = %s, data_modificacao = %s WHERE email = %s"
+            val = (user.senha, datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'), user.email)
+            cursor.execute(sql, val)
+            connection.commit()
+            cursor.close()
+            return "Senha alterada com sucesso!"
+        except Exception as e:
+            raise Exception(f"Erro ao salvar nova senha: {e}")

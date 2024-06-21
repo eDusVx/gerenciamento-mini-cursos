@@ -126,6 +126,25 @@ class UserRepositoryImpl(UserRepositoryInteface):
             return usuarios
         except Exception as e:
             raise Exception(f"Erro ao buscar usuarios: {e}")
+    
+    def buscarTodosPorTipo(self, tipoAcesso: str):
+        try:
+            usuarios = []
+            connection = Database.obter_conexao()
+            cursor = connection.cursor(dictionary=True)
+            sql = "SELECT * FROM usuarios WHERE tipoAcesso = %s order by nome ASC"
+            val = (tipoAcesso,)
+            cursor.execute(sql, val)
+            result = cursor.fetchall()
+            if len(result) == 0:
+                raise ValueError("Nenhum Usuario cadastrado")
+            
+            for row in result:
+                usuario = self.usuario_mapper.modelToDomain(row)
+                usuarios.append(usuario)
+            return usuarios
+        except Exception as e:
+            raise Exception(f"Erro ao buscar usuarios: {e}")
 
     
     def buscarPorTipoAcesso(self, tipoAcesso: str, pagina: int):

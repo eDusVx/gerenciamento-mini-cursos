@@ -23,6 +23,11 @@ def login():
     api_url = app.config['API_URL']
     return render_template('login.html', api_url=api_url)
 
+@app.route('/esqueci_senha')
+def esqueci_senha():
+    api_url = app.config['API_URL']
+    return render_template('esqueci_senha.html', api_url=api_url)
+
 @app.route('/home')
 def home():
     return render_template('home.html', jwt_secret=os.getenv('JWT_SECRET'))

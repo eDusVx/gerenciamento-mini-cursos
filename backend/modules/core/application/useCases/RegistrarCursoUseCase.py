@@ -31,6 +31,11 @@ class RegistrarCursoUsecase:
 
     async def execute(self, request: RegistrarCursoUseCaseRequest) -> str:
         try:
+
+            buscarCurso = self.cursoRepository.buscarPorNome(request["nome"])
+            if buscarCurso == True:
+                raise ValueError(f"Já existe um curso com o nome {request['nome']}!")
+            
             curso = Curso.create(
                 nome=request["nome"],
                 descricao=request["descricao"],

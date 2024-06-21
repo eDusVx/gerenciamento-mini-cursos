@@ -19,3 +19,6 @@ class UserRepositoryInteface:
 
     def buscarPorTipoAcesso(self, tipoAcesso: str, pagina: int) -> List[Usuario]:
         pass
+
+    def buscarTodosPorTipo(self, tipoAcesso: str) -> List[Usuario]:
+        pass

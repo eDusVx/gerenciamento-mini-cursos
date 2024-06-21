@@ -7,3 +7,6 @@ class UserRepositoryInteface:
 
     def salvar(self, user: Usuario) -> str:
         pass
+
+    def salvarNovaSenha(self, user: Usuario) ->str:
+        pass

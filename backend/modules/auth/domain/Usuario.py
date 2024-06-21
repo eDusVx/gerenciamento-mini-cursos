@@ -87,6 +87,8 @@ class Usuario:
             raise ValueError("Email deve ser uma string!")
         if "@" not in email or "." not in email:
             raise ValueError("Email inválido!")
+        if not email.endswith("@sempreceub.com"):
+            raise ValueError("O email institucional deve terminar com @sempreceub.com")
         self.__email = email
 
     @senha.setter
@@ -149,3 +151,9 @@ class Usuario:
             return True
         else:
             return False
+    
+    def alterarSenha(self, senha:str):
+        if senha is None:
+            raise ValueError("Senha não informada!")
+        novaSenha = self.__criptografar_senha(senha)
+        self.senha = novaSenha

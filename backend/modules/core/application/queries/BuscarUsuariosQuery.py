@@ -2,7 +2,7 @@ from interceptors.LoggerInterceptor import LoggerInterceptor
 from ...domain.repositories.UsuarioRepository import UserRepositoryInteface
 
 class BuscarUsuariosQueryRequest:
-    def __init__(self, tipoAcesso: str, pagina: int):
+    def __init__(self, tipoAcesso: str, pagina: int = None):
         self.tipoAcesso = tipoAcesso
         self.pagina = pagina
 
@@ -18,6 +18,11 @@ class BuscarUsuariosQuery:
     async def execute(self, request: BuscarUsuariosQueryRequest) -> dict:
         try:
             usuarios = []
+            if request["pagina"] == 0:
+                usuario = self.usuario_repository.buscarTodosPorTipo(request["tipoAcesso"])
+                for i in usuario:
+                    usuarios.append(i.toDto())
+                return usuarios
             buscarNumeroPaginas = self.usuario_repository.buscarNumeroDePaginas(request["tipoAcesso"] if request["tipoAcesso"] else None)
             if(request["tipoAcesso"] == None):
                 usuario = self.usuario_repository.buscarTodos(request["pagina"])

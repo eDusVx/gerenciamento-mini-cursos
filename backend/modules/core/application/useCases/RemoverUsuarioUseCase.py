@@ -25,6 +25,6 @@ class RemoverUsuarioUsecase:
            
             self.usuario_repository.removerPorId(request["ra"])
 
-            return f"Usuário ra : {request["ra"]} removido com sucesso!"
+            return f"Usuário ra : {request['ra']} removido com sucesso!"
         except Exception as e:
             raise e
