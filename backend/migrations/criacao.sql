@@ -82,6 +82,62 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `public`.`faltas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `public`.`faltas` (
+  `id` VARCHAR(36) NOT NULL,
+  `id_aula` VARCHAR(36) NOT NULL,
+  `usuario_ra` VARCHAR(8) NOT NULL,
+  `data_falta` DATE NOT NULL,
+  `justificada` TINYINT(1) NOT NULL DEFAULT '0',
+  `data_inclusao` DATETIME(6) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_faltas_aula` (`id_aula` ASC) VISIBLE,
+  INDEX `fk_faltas_usuario` (`usuario_ra` ASC) VISIBLE,
+  CONSTRAINT `fk_faltas_aula`
+    FOREIGN KEY (`id_aula`)
+    REFERENCES `public`.`aulas` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_faltas_usuario`
+    FOREIGN KEY (`usuario_ra`)
+    REFERENCES `public`.`usuarios` (`ra`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `public`.`notas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `public`.`notas` (
+  `id` VARCHAR(36) NOT NULL,
+  `curso_id` VARCHAR(36) NOT NULL,
+  `usuario_ra` VARCHAR(8) NOT NULL,
+  `nota` DECIMAL(5,2) NULL DEFAULT NULL,
+  `data_lancamento` DATE NULL DEFAULT NULL,
+  `data_inclusao` DATETIME(6) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_notas_curso` (`curso_id` ASC) VISIBLE,
+  INDEX `fk_notas_usuario` (`usuario_ra` ASC) VISIBLE,
+  CONSTRAINT `fk_notas_curso`
+    FOREIGN KEY (`curso_id`)
+    REFERENCES `public`.`curso` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_notas_usuario`
+    FOREIGN KEY (`usuario_ra`)
+    REFERENCES `public`.`usuarios` (`ra`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `public`.`usuarios_curso`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `public`.`usuarios_curso` (
